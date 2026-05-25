@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>리뷰팀 주간 운영 보고 · 2026-05</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#ffffff; --ink:#16202e; --muted:#5f6b7a; --faint:#9aa3b0;
+    --line:#e9ecf1; --line2:#f2f4f7;
+    --brand:#2f56c7; --brand-d:#22409a; --brand-soft:#eef2fc;
+    --pos:#16915a; --pos-d:#0f6e44; --pos-soft:#e9f6ef;
+    --neutral:#9aa3b0; --neutral-soft:#eef1f5;
+    --warn:#c2620c; --warn-soft:#fdf2e6; --hot:#c33; --hot-soft:#fcebea;
+    --shadow:0 1px 2px rgba(22,32,46,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);font-size:15px;line-height:1.65;background:var(--bg);padding:0 0 80px}
+  .num{font-family:'IBM Plex Mono',monospace;font-feature-settings:"tnum"}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  b{font-weight:600} small{font-size:.82em}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(246,247,249,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1080px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .nav .brand{font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-weight:700;font-size:14px;margin-right:auto}
+  .nav .brand span{color:var(--brand)}
+  .nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:7px;transition:.15s}
+  .nav a:hover,.nav a.on{background:var(--brand-soft);color:var(--brand-d)}
+  .nav .print-btn{margin-left:8px;font-size:12px;background:var(--ink);color:#fff;border:none;padding:7px 13px;border-radius:7px;cursor:pointer;font-family:inherit;font-weight:500;display:flex;align-items:center;gap:5px}
+  .nav .print-btn:hover{background:var(--brand-d)}
+
+  header{padding:34px 0 6px}
+  .kick{font-family:'IBM Plex Sans',sans-serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--brand);font-weight:600}
+  .accent-line{width:52px;height:3px;background:linear-gradient(90deg,var(--brand),rgba(47,86,199,0));border-radius:2px;margin:13px 0 15px}
+  h1{font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-weight:700;font-size:clamp(26px,4vw,34px);letter-spacing:-.02em;margin-top:6px}
+  .htop{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .badge{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;background:var(--ink);color:#fff;padding:7px 14px;border-radius:8px;white-space:nowrap}
+  .meta{display:flex;flex-wrap:wrap;gap:22px;margin-top:14px;font-size:13.5px;color:var(--muted)} .meta b{color:var(--ink)}
+
+  .summary{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);display:grid;grid-template-columns:1.5fr 1fr;overflow:hidden}
+  .sum-msg{padding:28px 30px}
+  .sum-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--brand);margin-bottom:13px}
+  .sum-msg p{font-size:18px;line-height:1.6;font-weight:500;letter-spacing:-.01em}
+  .sum-msg .g{color:var(--pos-d);font-weight:700} .sum-msg .n{color:var(--neutral);font-weight:700}
+  .sum-stats{display:grid;grid-template-rows:1fr 1fr;border-left:1px solid var(--line)}
+  .st{padding:20px 28px;display:flex;flex-direction:column;justify-content:center}
+  .st.up{background:var(--pos-soft)} .st.down{background:#f7f8fa}
+  .st .lab{font-size:12.5px;color:var(--muted);font-weight:500}
+  .st .big{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:38px;letter-spacing:-.03em;line-height:1.05;margin:4px 0 2px}
+  .st.up .big{color:var(--pos-d)} .st.down .big{color:#5a6473}
+  .st .ex{font-size:12px;color:var(--muted)}
+
+  /* Decisions panel — NEW */
+  .decisions{margin-top:24px;background:linear-gradient(135deg,#fff5e6,#fff);border:1px solid #f0d9b0;border-left:5px solid var(--warn);border-radius:14px;padding:24px 28px;box-shadow:var(--shadow)}
+  .decisions h2{font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:5px}
+  .decisions h2 .ic{background:var(--warn);color:#fff;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  .decisions .sub{font-size:13px;color:#7a4a13;margin-bottom:18px}
+  .dec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .dec{background:#fff;border:1px solid #f0d9b0;border-radius:10px;padding:15px 17px;position:relative}
+  .dec .dt{font-size:11px;font-weight:700;color:var(--warn);letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px}
+  .dec .dq{font-weight:600;font-size:14px;margin-bottom:5px;color:var(--ink);line-height:1.45}
+  .dec .dd{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .dec .pri{position:absolute;top:13px;right:14px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px}
+  .dec .pri.h{background:var(--hot-soft);color:var(--hot)} .dec .pri.m{background:var(--warn-soft);color:var(--warn)}
+
+  .part{scroll-margin-top:64px;margin-top:48px;display:flex;align-items:center;gap:13px}
+  .part .pl{font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--brand);white-space:nowrap}
+  .part .pt{font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-size:14.5px;font-weight:600;white-space:nowrap}
+  .part .ln{flex:1;height:1px;background:var(--line)}
+
+  section{margin-top:22px;scroll-margin-top:64px}
+  .s-head{display:flex;align-items:center;gap:12px;margin-bottom:15px}
+  .s-no{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:#fff;background:var(--brand);width:29px;height:29px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .s-title{font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em}
+  .s-sub{margin-left:auto;font-size:13px;color:var(--faint)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+  .pad{padding:24px}
+  .panel h3{font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-size:15.5px;font-weight:600;margin-bottom:4px}
+  .panel .cap{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.55}
+
+  /* Risk Register — NEW */
+  .risks{display:flex;flex-direction:column;gap:0}
+  .risk{display:grid;grid-template-columns:38px 1fr 90px 90px 110px;gap:14px;padding:14px 16px;border-bottom:1px solid var(--line2);align-items:center}
+  .risk:last-child{border-bottom:none}
+  .risk.crit{background:linear-gradient(90deg,rgba(204,51,51,.04),transparent)}
+  .risk .sev{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12px;color:#fff}
+  .risk .sev.h{background:var(--hot)} .risk .sev.m{background:var(--warn)} .risk .sev.l{background:var(--neutral)}
+  .risk .ti{font-weight:600;font-size:14px;line-height:1.4}
+  .risk .ti small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.5}
+  .risk .impact,.risk .prob{font-size:12px;color:var(--muted);text-align:center;font-weight:500}
+  .risk .impact b,.risk .prob b{display:block;font-size:13.5px;color:var(--ink);font-weight:700;margin-bottom:2px}
+  .risk .owner{font-size:12px;color:var(--muted);text-align:right}
+  .risk .owner b{display:block;color:var(--ink);font-weight:600;font-size:12.5px;margin-bottom:2px}
+  .risk-th{display:grid;grid-template-columns:38px 1fr 90px 90px 110px;gap:14px;padding:11px 16px;background:#fafbfc;font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--line)}
+  .risk-th div:nth-child(3),.risk-th div:nth-child(4){text-align:center}
+  .risk-th div:last-child{text-align:right}
+
+  /* Scenarios — NEW */
+  .scen{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .sc{background:#fff;border:1px solid var(--line);border-top:4px solid var(--neutral);border-radius:12px;padding:18px 19px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+  .sc.good{border-top-color:var(--pos)} .sc.mid{border-top-color:var(--warn)} .sc.bad{border-top-color:var(--hot)}
+  .sc .h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .sc .tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:.04em;text-transform:uppercase}
+  .sc.good .tag{background:var(--pos-soft);color:var(--pos-d)}
+  .sc.mid .tag{background:var(--warn-soft);color:var(--warn)}
+  .sc.bad .tag{background:var(--hot-soft);color:var(--hot)}
+  .sc .pct{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;color:var(--muted)}
+  .sc .t{font-weight:700;font-size:15.5px;line-height:1.35}
+  .sc .when{font-size:12px;color:var(--muted);margin-top:-4px}
+  .sc .row{display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;border-bottom:1px dashed var(--line)}
+  .sc .row:last-of-type{border-bottom:none}
+  .sc .row span:first-child{color:var(--muted)}
+  .sc .row span:last-child{font-weight:600;color:var(--ink);text-align:right}
+  .sc .resp{margin-top:5px;font-size:12px;color:#3f4a5c;background:#fafbfd;border-radius:8px;padding:10px 12px;line-height:1.55}
+  .sc .resp b{color:var(--ink)}
+
+  /* Financial — NEW */
+  .fin-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+  .fin-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+  .fin-card h4{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px}
+  .fin-card .val{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:26px;letter-spacing:-.02em;color:var(--ink)}
+  .fin-card .val .u{font-size:13px;font-weight:500;color:var(--muted);margin-left:4px;font-family:'Noto Sans KR'}
+  .fin-card .nt{font-size:11.5px;color:var(--faint);margin-top:6px;line-height:1.5}
+  .fin-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);font-size:13px}
+  .fin-row:last-child{border-bottom:none}
+  .fin-row .l{color:var(--muted)}
+  .fin-row .v{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--ink)}
+  .fin-row .v.pos{color:var(--pos-d)} .fin-row .v.warn{color:var(--warn)} .fin-row .v.hot{color:var(--hot)}
+
+  /* Action Tracker — NEW */
+  .act-tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+  .act-tbl thead th{text-align:left;font-size:11.5px;color:var(--muted);font-weight:600;padding:11px 12px;border-bottom:2px solid var(--line);background:#fafbfc;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+  .act-tbl tbody td{padding:13px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  .act-tbl tbody tr:hover{background:#fafbfd}
+  .act-tbl .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);font-weight:700}
+  .act-tbl .tit{font-weight:600;font-size:13.5px;color:var(--ink)}
+  .act-tbl .tit small{display:block;font-weight:400;color:var(--muted);font-size:11.5px;margin-top:3px;line-height:1.5}
+  .act-tbl .pill{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap}
+  .act-tbl .p-h{background:var(--hot-soft);color:var(--hot)}
+  .act-tbl .p-m{background:var(--warn-soft);color:var(--warn)}
+  .act-tbl .p-l{background:var(--neutral-soft);color:var(--neutral)}
+  .act-tbl .s-go{background:#dcf3e4;color:var(--pos-d)}
+  .act-tbl .s-pen{background:#f4f5f8;color:var(--muted)}
+  .act-tbl .s-rev{background:#e0e8f8;color:var(--brand-d)}
+  .act-tbl .s-tbd{background:#fdebd7;color:var(--warn)}
+  .act-tbl .due{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);white-space:nowrap}
+  .act-tbl .owner{font-size:12.5px;color:var(--ink);font-weight:500;white-space:nowrap}
+
+  /* KPI boxes */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow);border-top:3px solid var(--neutral)}
+  .kpi.up{border-top-color:var(--pos)} .kpi.warn{border-top-color:var(--warn)}
+  .kpi .lab{font-size:12.5px;color:var(--muted);font-weight:500}
+  .kpi .val{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:31px;letter-spacing:-.02em;margin-top:9px;line-height:1.05}
+  .kpi .val .u{font-size:14px;font-weight:500;color:var(--muted);margin-left:3px;font-family:'Noto Sans KR'}
+  .kpi .sub{margin-top:9px;font-size:12.5px;font-weight:600;display:flex;align-items:baseline;gap:5px;flex-wrap:wrap}
+  .pos{color:var(--pos-d)} .neu{color:var(--neutral)} .warnc{color:var(--warn)}
+  .kpi .sub .lite{color:var(--faint);font-weight:400}
+
+  /* context */
+  .ctx-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:0;overflow:hidden}
+  .ctx-l{padding:24px 28px;border-right:1px solid var(--line);background:#fafbfd}
+  .ctx-r{padding:22px 28px}
+  .ctx-l .pill{display:inline-block;font-size:12px;font-weight:600;color:var(--pos-d);background:var(--pos-soft);padding:5px 11px;border-radius:99px;margin-bottom:12px}
+  .ctx-l h4{font-size:16px;font-weight:600;margin-bottom:10px}
+  .ctx-l p{font-size:13.5px;color:#3f4a5c;line-height:1.65}
+  .nowbox{margin-top:15px;background:var(--brand-soft);border-radius:10px;padding:13px 15px;font-size:13px;color:var(--brand-d);line-height:1.6}
+  .tl{list-style:none}
+  .tl li{display:grid;grid-template-columns:60px 1fr;gap:14px;padding:8px 0;position:relative;font-size:13.5px}
+  .tl li:not(:last-child)::after{content:"";position:absolute;left:19px;top:28px;bottom:-2px;width:2px;background:var(--line)}
+  .tl .dt{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;color:var(--brand);background:var(--brand-soft);border-radius:7px;height:26px;display:flex;align-items:center;justify-content:center;z-index:1}
+  .tl .ev{align-self:center;color:#3f4a5c;line-height:1.5} .tl .ev b{color:var(--ink)}
+
+  /* clean data tables */
+  .dt{width:100%;border-collapse:collapse;font-size:14px}
+  .dt th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:11px 14px;border-bottom:2px solid var(--line);background:#fafbfc;white-space:nowrap}
+  .dt th.r,.dt td.r{text-align:right;font-family:'IBM Plex Mono',monospace}
+  .dt td{padding:13px 14px;border-bottom:1px solid var(--line2)}
+  .dt tbody tr:last-child td{border-bottom:none}
+  .dt td.lbl{font-weight:600}
+  .dt tr.hl td{background:var(--pos-soft)}
+  .dt tr.hl td.lbl{color:var(--pos-d)}
+  .tnote{margin-top:14px;font-size:12px;color:var(--muted);background:var(--line2);border-radius:9px;padding:11px 14px;line-height:1.55}
+  .clegend{display:flex;gap:18px;margin-top:14px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+  .clegend span{display:flex;align-items:center;gap:7px} .clegend i{width:13px;height:13px;border-radius:3px;display:inline-block}
+
+  /* heatmap */
+  .heat{overflow-x:auto}
+  .hgrid{display:grid;grid-template-columns:86px repeat(14,minmax(0,1fr)) 60px;gap:3px;min-width:740px}
+  .hc{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px}
+  .hc.hd{padding-bottom:6px;color:var(--muted);position:relative}
+  .hc.hd b{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink);font-weight:700}
+  .hc.hd span{font-size:10px;color:var(--faint)}
+  .hc.hd .mk{position:absolute;top:-19px;left:50%;transform:translateX(-50%);white-space:nowrap;font-style:normal;font-size:9.5px;font-weight:600;color:#fff;padding:2px 7px;border-radius:5px}
+  .hc.hd .mk.b{background:var(--brand)} .hc.hd .mk.r{background:var(--hot)}
+  .hc.ht{font-size:11px;color:var(--muted);font-weight:600;align-self:end;padding-bottom:6px}
+  .hc.name{align-items:flex-end;justify-content:center;font-size:13px;font-weight:600;padding-right:8px;text-align:right}
+  .hc.name small{display:block;font-size:9.5px;color:var(--faint);font-weight:400}
+  .hc.name.dep{color:var(--neutral)}
+  .hcell{height:37px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600}
+  .hc.tot{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--ink)}
+  .hcell.p1,.hc.hd.p1{box-shadow:inset 2px 0 0 var(--brand)} .hcell.p2,.hc.hd.p2{box-shadow:inset 2px 0 0 var(--hot)}
+  .heat-leg{display:flex;align-items:center;gap:16px;margin-top:15px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+  .heat-leg .bar{width:110px;height:11px;border-radius:6px;background:linear-gradient(90deg,#dbe7f8,#1f4396)}
+  .heat-leg .em{width:13px;height:13px;border-radius:4px;background:#f5f6f8;border:1px solid var(--line);display:inline-block;vertical-align:middle;margin-right:5px}
+
+  /* achievements */
+  .achv{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .ac{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:19px;box-shadow:var(--shadow)}
+  .ac .chk{width:25px;height:25px;border-radius:7px;background:var(--pos-soft);color:var(--pos-d);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;margin-bottom:11px}
+  .ac .t{font-weight:600;font-size:14.5px;margin-bottom:6px}
+  .ac .d{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .ac .tbd{display:inline-block;margin-top:7px;font-size:10.5px;font-weight:600;color:var(--warn);background:var(--warn-soft);padding:2px 8px;border-radius:99px}
+
+  /* resignation cats */
+  .res-cats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .rcat{border:1px solid var(--line);border-radius:12px;padding:18px 20px;background:#fafbfd}
+  .rcat .ct{font-size:14px;font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:8px}
+  .rcat .ct .pip{width:9px;height:9px;border-radius:50%;background:var(--hot)}
+  .rcat ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .rcat li{font-size:12.5px;color:#3f4a5c;line-height:1.5;padding-left:14px;position:relative}
+  .rcat li::before{content:"–";position:absolute;left:0;color:var(--faint)}
+
+  /* throughput */
+  .dept{display:flex;flex-direction:column;gap:14px}
+  .deptrow{display:grid;grid-template-columns:150px 1fr 92px;gap:15px;align-items:center}
+  .deptrow .nm{font-size:14px;font-weight:500}
+  .deptrow .nm small{display:block;color:var(--faint);font-weight:400;font-size:11.5px;margin-top:1px}
+  .deptrow .tr{height:30px;background:var(--line2);border-radius:8px;overflow:hidden;position:relative}
+  .deptrow .fl{height:100%;background:var(--brand);width:0;transition:width .9s ease;display:flex;align-items:center;padding-left:12px;color:#fff;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px}
+  .deptrow .tr.empty{background:repeating-linear-gradient(45deg,#f4f5f8,#f4f5f8 8px,#eaedf3 8px,#eaedf3 16px)}
+  .deptrow .tr.empty span{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--warn);font-weight:600}
+  .deptrow .rt{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;color:var(--muted)} .deptrow .rt.q{color:var(--warn)}
+
+  /* coupang */
+  .cp{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .cp .m{padding:22px 24px} .cp .m:first-child{border-right:1px solid var(--line)}
+  .cp .mh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .cp .mn{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:14px;color:#fff;background:var(--brand);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .cp .mt{font-weight:600;font-size:15px}
+  .cp .flow{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .cp .flow li{font-size:13px;color:#3f4a5c;padding-left:23px;position:relative;line-height:1.55}
+  .cp .flow .step{position:absolute;left:0;top:1px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--brand);background:var(--brand-soft);width:18px;height:18px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+  .cp .branch{margin-top:8px;display:flex;flex-direction:column;gap:7px}
+  .cp .branch .b{font-size:12.5px;line-height:1.5;padding:8px 11px;border-radius:8px}
+  .cp .branch .ok{background:var(--pos-soft);color:var(--pos-d)} .cp .branch .no{background:var(--warn-soft);color:#7a4a13}
+  .cp-why{padding:16px 24px;background:#fafbfd;border-top:1px solid var(--line);display:flex;gap:11px;align-items:flex-start}
+  .cp-why .ic{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+  .cp-why p{font-size:13px;color:#3f4a5c;line-height:1.6}
+  .cp-when{font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-size:12.5px;font-weight:600;color:var(--pos-d);background:var(--pos-soft);padding:5px 12px;border-radius:99px}
+
+  /* appendix */
+  .appx{margin-top:38px}
+  .appx-h{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+  .appx-h .tag2{font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+  .appx-h .tt{font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-size:14.5px;font-weight:600;color:var(--muted)}
+  .appx-h .sub{margin-left:auto;font-size:12px;color:var(--faint)}
+  .att.sm{display:flex;gap:7px;flex-wrap:wrap}
+  .att.sm .day{flex:1;min-width:80px;border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:#fff}
+  .att.sm .dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .att.sm .dd{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12.5px} .att.sm .dw{font-size:10px;color:var(--faint)}
+  .att.sm .tg{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;margin-bottom:5px}
+  .att.sm .dn{font-size:10.5px;color:#5f6b7a;line-height:1.4}
+  .tg.study{background:#efe9f7;color:#6b4fa3} .tg.remote{background:#e3f4f1;color:#1c7a6e} .tg.onsite{background:var(--brand-soft);color:var(--brand-d)} .tg.leave{background:var(--neutral-soft);color:var(--neutral)}
+
+  footer{margin-top:42px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--faint)}
+
+  @media (max-width:860px){
+    body{font-size:14px}
+    .summary,.kpis,.ctx-grid,.cp,.achv,.res-cats,.scen,.fin-grid,.dec-grid{grid-template-columns:1fr}
+    .kpis,.achv{grid-template-columns:repeat(2,1fr)}
+    .sum-stats{border-left:none;border-top:1px solid var(--line)} .ctx-l{border-right:none;border-bottom:1px solid var(--line)}
+    .cp .m:first-child{border-right:none;border-bottom:1px solid var(--line)}
+    .badge{order:-1;margin:0 0 4px} .nav .brand{display:none}
+    .risk{grid-template-columns:38px 1fr;gap:10px}
+    .risk .impact,.risk .prob,.risk .owner{grid-column:2;text-align:left;display:flex;gap:8px;font-size:12px}
+    .risk .impact b,.risk .prob b,.risk .owner b{display:inline}
+    .risk-th{display:none}
+    .act-tbl thead{display:none}
+    .act-tbl,.act-tbl tbody,.act-tbl tr,.act-tbl td{display:block;width:100%}
+    .act-tbl tr{border-bottom:1px solid var(--line);padding:8px 0}
+    .act-tbl td{border:none;padding:4px 12px}
+    .act-tbl td:before{content:attr(data-label) ":  ";color:var(--muted);font-size:11px;font-weight:600}
+    .act-tbl td:first-child:before{display:none}
+  }
+  @media print{
+    body{background:#fff;padding:0;font-size:11pt}
+    .wrap{padding:0 12mm}
+    .nav{display:none}
+    .fl{transition:none}
+    .part,.s-head,section{page-break-inside:avoid}
+    .panel,.kpi,.ac,.sc,.dec,.fin-card{box-shadow:none;break-inside:avoid}
+    .decisions{background:#fff}
+    header{padding:8mm 0 4mm}
+    h1{font-size:20pt}
+    .badge{background:#000}
+    .part{margin-top:8mm}
+    section{margin-top:4mm}
+    .summary,.kpis,.dec-grid,.scen,.fin-grid{break-inside:avoid}
+    a[href^="http"]:after{content:" (" attr(href) ")";font-size:9pt;color:#666}
+    footer{break-inside:avoid;page-break-before:auto}
+  }
+</style>
+</head>
+<body>
+<div class="nav"><div class="nav-in">
+  <div class="brand">리뷰팀 <span>주간보고</span></div>
+  <a href="#decisions">의사결정</a><a href="#risks">리스크</a><a href="#partA">현황</a><a href="#partB">성과</a><a href="#partC">인력</a><a href="#partD">운영</a><a href="#partE">재무</a><a href="#actions">액션</a>
+  <button class="print-btn" onclick="window.print()">⎙ 인쇄/PDF</button>
+</div></div>
+<div class="wrap">
+
+  <header>
+    <div class="kick">Review Team · Weekly Operations</div>
+    <div class="accent-line"></div>
+    <div class="htop"><h1>리뷰팀 주간 운영 보고</h1><div class="badge">2026 · 5월</div></div>
+    <div class="meta">
+      <span>핵심 주차 <b class="num">5월 3주차 (5/18~22)</b></span>
+      <span>데이터 범위 <b class="num">1월 ~ 5/22</b></span>
+      <span>작성자 <b>최휘연</b> · <span class="num">2026-05-23</span></span>
+    </div>
+  </header>
+
+  <div class="summary">
+    <div class="sum-msg">
+      <span class="sum-tag">5월 3주차 요약</span>
+      <p>리뷰팀 <b class="n">전체 합계는 물량 분담으로 감소</b>,<br>정현이(1인) 체계로 전환되며 <b class="g">처리량은 점차 증가 중</b> — 일평균 1~4월 약 359 → 5월 508~582건. <span style="font-size:14px;color:var(--muted)">5월 진행중(5/22까지).</span></p>
+    </div>
+    <div class="sum-stats">
+      <div class="st down"><div class="lab">리뷰팀 합계 (vs 전주)</div><div class="big">&minus;49%</div><div class="ex">3,799건 · 구조적 분담</div></div>
+      <div class="st up"><div class="lab">정현이(1인) 5월 일평균 (진행중)</div><div class="big">508~582</div><div class="ex">건/일 · 점차 증가 중</div></div>
+    </div>
+  </div>
+
+  <!-- DECISIONS PANEL -->
+  <div class="decisions" id="decisions">
+    <h2><span class="ic">!</span>이번 주 의사결정 필요사항</h2>
+    <div class="sub">상위 결재·합의가 필요한 안건 — 미결정 시 차주 운영에 영향</div>
+    <div class="dec-grid">
+      <div class="dec">
+        <span class="pri h">긴급</span>
+        <div class="dt">D1 · 인사</div>
+        <div class="dq">정현이 리텐션 조건 확정</div>
+        <div class="dd">6월 중순까지 유지 협의된 상태. 본부장 추가 면담 후 <b>파트장 직급·인센티브 상향</b> 등 구체 조건 결재 필요. 1인 단일 의존 해소 전까지 최우선.</div>
+      </div>
+      <div class="dec">
+        <span class="pri h">긴급</span>
+        <div class="dt">D2 · 운영</div>
+        <div class="dq">페이백(정산) 지연 정책 재검토</div>
+        <div class="dd">출금신청 후 한 달+ 지연, 리뷰어 이탈·항의 급증. 일정 단축 요청 반려된 상태 — <b>참여율 저하의 근본 원인</b>이므로 재논의 또는 보완책 결재 필요.</div>
+      </div>
+      <div class="dec">
+        <span class="pri m">중요</span>
+        <div class="dt">D3 · 채용</div>
+        <div class="dq">신규 1명 추가 채용 승인</div>
+        <div class="dd">이선주 입사 완료 · 온보딩 중. 정현이 퇴사 대비 <b>1명 더 보충</b> 필요. 채용 시작 시점·예산 결재.</div>
+      </div>
+      <div class="dec">
+        <span class="pri m">중요</span>
+        <div class="dt">D4 · 제도</div>
+        <div class="dq">수당제 금액·규정 확정</div>
+        <div class="dd">도입은 결정, 금액·지급기준 미정. 인센티브(600건+, 건당 100원)와의 관계 정리 후 픽스.</div>
+      </div>
+      <div class="dec">
+        <span class="pri m">중요</span>
+        <div class="dt">D5 · 평가</div>
+        <div class="dq">측정 지표 재정의</div>
+        <div class="dd">건수는 업체 의뢰량에 좌우. <b>안 빠지는 물량 제거는 직원 몫</b>이라는 부대표님 의견 반영해 KPI 재정의 합의 필요.</div>
+      </div>
+      <div class="dec">
+        <span class="pri m">중요</span>
+        <div class="dt">D6 · 거버넌스</div>
+        <div class="dq">전 부서 통계 합산 체계</div>
+        <div class="dd">현재 리뷰팀(①)만 집계 — ②영지부 파견 ③영지부 직접 ④영업부 직접 누락. 부서장 합의 → 통합 집계 표준 도입.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISK REGISTER -->
+  <div class="part" id="risks"><span class="pl">Risks</span><span class="pt">리스크 레지스터</span><span class="ln"></span></div>
+  <section>
+    <div class="s-head"><span class="s-no">R</span><span class="s-title">현재 리스크 — Severity × Impact</span><span class="s-sub">총 6건 · 신규 1 / 진행 5</span></div>
+    <div class="panel">
+      <div class="risk-th"><div></div><div>리스크</div><div>임팩트</div><div>가능성</div><div>현황 / 담당</div></div>
+      <div class="risks">
+        <div class="risk crit">
+          <div class="sev h">H</div>
+          <div class="ti">정현이(1인) 단일 의존<small>현재 처리량의 약 91%가 1인에 집중. 퇴사 시 즉각 처리 마비.</small></div>
+          <div class="impact"><b>매우 큼</b>처리량 -50%+</div>
+          <div class="prob"><b>중간</b>6월 중순 협의</div>
+          <div class="owner"><b>최휘연</b>리텐션 협의 중</div>
+        </div>
+        <div class="risk crit">
+          <div class="sev h">H</div>
+          <div class="ti">페이백(정산) 지연 → 리뷰어 이탈<small>출금 후 한 달+ 지연, 항의·문의 급증. 신규 모집으로 상쇄 불가.</small></div>
+          <div class="impact"><b>매우 큼</b>참여율·신뢰도</div>
+          <div class="prob"><b>확정</b>현재 발생 중</div>
+          <div class="owner"><b>본부장</b>재검토 요청</div>
+        </div>
+        <div class="risk">
+          <div class="sev m">M</div>
+          <div class="ti">전혜은 인수인계 부담<small>퇴사자가 캠페인을 비정상 등록한 건 다수 — 이관 후 정리·처리 어려움.</small></div>
+          <div class="impact"><b>중간</b>작업 부하</div>
+          <div class="prob"><b>확정</b>현재 발생 중</div>
+          <div class="owner"><b>정현이·이선주</b>이관 처리 중</div>
+        </div>
+        <div class="risk">
+          <div class="sev m">M</div>
+          <div class="ti">전체 통계 가시성 부재<small>②영지부 파견 ③영지부 직접 ④영업부 직접 미집계 — 누수·책임 추적 불가.</small></div>
+          <div class="impact"><b>중간</b>의사결정 왜곡</div>
+          <div class="prob"><b>확정</b>구조적</div>
+          <div class="owner"><b>최휘연</b>합산 체계 제안</div>
+        </div>
+        <div class="risk">
+          <div class="sev m">M</div>
+          <div class="ti">신규 인력 온보딩 지연 리스크<small>이선주 온보딩 중. 1인 추가 채용 시 동시 온보딩 부담.</small></div>
+          <div class="impact"><b>중간</b>처리량 안정화</div>
+          <div class="prob"><b>중간</b>채용 시점 의존</div>
+          <div class="owner"><b>최휘연</b>온보딩 체계 신규</div>
+        </div>
+        <div class="risk">
+          <div class="sev m">M</div>
+          <div class="ti">관리자 실무 미숙<small>본부장+신규 관리자가 실무 미숙. 헤더 2명 퇴사 인지도 늦음(3일 전).</small></div>
+          <div class="impact"><b>중간</b>대응 속도</div>
+          <div class="prob"><b>높음</b>현재 발생 중</div>
+          <div class="owner"><b>본부장·최휘연</b>구조 정비 중</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="part" id="partA"><span class="pl">Part A</span><span class="pt">처리량 현황 &amp; 추이</span><span class="ln"></span></div>
+
+  <section>
+    <div class="s-head"><span class="s-no">01</span><span class="s-title">왜 팀 합계가 줄었나</span><span class="s-sub">조직 재편 타임라인</span></div>
+    <div class="panel ctx-grid">
+      <div class="ctx-l">
+        <h4>리뷰 물량이 여러 경로로 분산 처리</h4>
+        <p>리뷰팀 합계 감소는 <b>물량의 여러 부서 분산 + 인력 변동(퇴사·이관)</b>의 결과. 현재 <b>리뷰팀 처리분만 집계</b>되어 합계가 줄어 보이나, <b>실가동 정현이(1인) 처리량은 증가</b>.</p>
+        <div class="nowbox">📌 <b>현재 처리 경로 (4갈래)</b> — ① 리뷰팀 ② 영지부의 리뷰팀 파견 ③ 영지부 직접진행 ④ 영업부 직접진행. 신규 캠페인은 <b>리뷰팀 &harr; 영지부 약 50:50</b> 배분.</div>
+      </div>
+      <div class="ctx-r"><ul class="tl">
+        <li><span class="dt">05-14</span><span class="ev">차애란·조윤정 <b>신규 건 배정 중단</b> → 정현이 집중 체계 시작</span></li>
+        <li><span class="dt">05-15</span><span class="ev">차애란·조윤정 물량 → <b>리뷰팀 + 영업지원부</b> 이관</span></li>
+        <li><span class="dt">05-18</span><span class="ev"><b>전혜은 퇴사</b></span></li>
+        <li><span class="dt">05-19</span><span class="ev">전혜은 물량 → <b>리뷰팀·영지부 정확히 50:50</b> 이관</span></li>
+        <li><span class="dt">현재</span><span class="ev">실가동 <b>정현이 1인</b> · 이선주(신규) 온보딩 · 신규건 <b>리뷰팀&harr;영지부 50:50</b> 배분</span></li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="s-head"><span class="s-no">02</span><span class="s-title">핵심 지표 (5월 3주차)</span><span class="s-sub">전주 대비</span></div>
+    <div class="kpis">
+      <div class="kpi"><div class="lab">리뷰팀 주간 합계</div><div class="val">3,799<span class="u">건</span></div><div class="sub neu">▼ 49.2% <span class="lite">분산·재편</span></div></div>
+      <div class="kpi up"><div class="lab">정현이(1인) 처리량</div><div class="val">3,452<span class="u">건</span></div><div class="sub pos">▲ 49.6% <span class="lite">vs 2,307</span></div></div>
+      <div class="kpi up"><div class="lab">정현이(1인) 일평균</div><div class="val">690<span class="u">건/일</span></div><div class="sub pos">▲ 49.7% <span class="lite">vs 461</span></div></div>
+      <div class="kpi warn"><div class="lab">실가동 인력</div><div class="val">1<span class="u">명</span></div><div class="sub warnc">단일 의존 <span class="lite">+ 이선주</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="s-head"><span class="s-no">03</span><span class="s-title">주차별 비교</span><span class="s-sub">팀 · 정현이 1인</span></div>
+    <div class="panel pad">
+      <svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'IBM Plex Sans',sans-serif">
+<defs><pattern id="hg" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#eef1f6"/><line x1="0" y1="0" x2="0" y2="7" stroke="#b9c1ce" stroke-width="3"/></pattern></defs>
+<line x1="54" y1="256.0" x2="704" y2="256.0" stroke="#e9ecf1"/>
+<text x="46" y="260.0" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">0</text>
+<line x1="54" y1="203.1" x2="704" y2="203.1" stroke="#e9ecf1"/>
+<text x="46" y="207.1" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">2k</text>
+<line x1="54" y1="150.3" x2="704" y2="150.3" stroke="#e9ecf1"/>
+<text x="46" y="154.3" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">4k</text>
+<line x1="54" y1="97.4" x2="704" y2="97.4" stroke="#e9ecf1"/>
+<text x="46" y="101.4" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">6k</text>
+<line x1="54" y1="44.6" x2="704" y2="44.6" stroke="#e9ecf1"/>
+<text x="46" y="48.6" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">8k</text>
+<rect x="135.3" y="44.5" width="54" height="148.3" rx="5" fill="#cdd3dd"/>
+<rect x="135.3" y="192.8" width="54" height="63.2" rx="5" fill="#16915a"/>
+<text x="162.3" y="35.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">8,003</text>
+<text x="162.3" y="228.4" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">30%</text>
+<text x="162.3" y="277.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">1주차</text>
+<rect x="352.0" y="58.4" width="54" height="136.7" rx="5" fill="#cdd3dd"/>
+<rect x="352.0" y="195.0" width="54" height="61.0" rx="5" fill="#16915a"/>
+<text x="379.0" y="49.4" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">7,478</text>
+<text x="379.0" y="229.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">31%</text>
+<text x="379.0" y="277.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">2주차</text>
+<rect x="568.7" y="155.6" width="54" height="9.2" rx="5" fill="#cdd3dd"/>
+<rect x="568.7" y="164.8" width="54" height="91.2" rx="5" fill="#16915a"/>
+<text x="595.7" y="146.6" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">3,799</text>
+<text x="595.7" y="214.4" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">91%</text>
+<text x="595.7" y="277.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">3주차</text>
+</svg>
+      <div class="clegend"><span><i style="background:#16915a"></i>정현이</span><span><i style="background:#cdd3dd"></i>나머지(이관/퇴사자 등)</span><span>막대 위 숫자 = 리뷰팀 합계 · 에메랄드 안 % = 정현이 비중</span></div>
+      <div class="tnote">팀 합계는 분담으로 8,003 → 3,799로 감소, 정현이(1인) 비중은 <b>30% → 91%</b>로 상승.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="s-head"><span class="s-no">04</span><span class="s-title">월별 추이 &amp; 누적 (1~5월)</span><span class="s-sub">팀 · 정현이 · 처리자별</span></div>
+    <div class="panel pad" style="margin-bottom:16px">
+      <svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'IBM Plex Sans',sans-serif">
+<defs><pattern id="hg2" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#eef1f6"/><line x1="0" y1="0" x2="0" y2="7" stroke="#b9c1ce" stroke-width="3"/></pattern></defs>
+<line x1="54" y1="256.0" x2="704" y2="256.0" stroke="#e9ecf1"/>
+<text x="46" y="260.0" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">0</text>
+<line x1="54" y1="205.5" x2="704" y2="205.5" stroke="#e9ecf1"/>
+<text x="46" y="209.5" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">10k</text>
+<line x1="54" y1="155.1" x2="704" y2="155.1" stroke="#e9ecf1"/>
+<text x="46" y="159.1" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">20k</text>
+<line x1="54" y1="104.6" x2="704" y2="104.6" stroke="#e9ecf1"/>
+<text x="46" y="108.6" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">30k</text>
+<line x1="54" y1="54.2" x2="704" y2="54.2" stroke="#e9ecf1"/>
+<text x="46" y="58.2" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">40k</text>
+<rect x="92.0" y="47.8" width="54" height="175.6" rx="5" fill="#cdd3dd"/>
+<rect x="92.0" y="223.5" width="54" height="32.5" rx="5" fill="#16915a"/>
+<text x="119.0" y="38.8" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">41,259</text>
+<text x="119.0" y="243.7" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">16%</text>
+<text x="119.0" y="277.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">1월</text>
+<rect x="222.0" y="81.3" width="54" height="143.4" rx="5" fill="#cdd3dd"/>
+<rect x="222.0" y="224.8" width="54" height="31.2" rx="5" fill="#16915a"/>
+<text x="249.0" y="72.3" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">34,622</text>
+<text x="249.0" y="244.4" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">18%</text>
+<text x="249.0" y="277.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">2월</text>
+<rect x="352.0" y="77.6" width="54" height="144.7" rx="5" fill="#cdd3dd"/>
+<rect x="352.0" y="222.3" width="54" height="33.7" rx="5" fill="#16915a"/>
+<text x="379.0" y="68.6" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">35,361</text>
+<text x="379.0" y="243.1" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">19%</text>
+<text x="379.0" y="277.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">3월</text>
+<rect x="482.0" y="66.5" width="54" height="140.4" rx="5" fill="#cdd3dd"/>
+<rect x="482.0" y="206.9" width="54" height="49.1" rx="5" fill="#16915a"/>
+<text x="509.0" y="57.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">37,562</text>
+<text x="509.0" y="235.4" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">26%</text>
+<text x="509.0" y="277.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">4월</text>
+<rect x="612.0" y="158.7" width="54" height="56.2" rx="5" fill="#cdd3dd"/>
+<rect x="612.0" y="214.9" width="54" height="41.1" rx="5" fill="#16915a"/>
+<rect x="612.0" y="145.0" width="54" height="13.7" rx="5" fill="url(#hg2)" stroke="#cdd3dd" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="639.0" y="136.0" text-anchor="middle" font-size="12" font-weight="700" fill="#5f6b7a" font-family="IBM Plex Mono">~22,000</text>
+<text x="639.0" y="155.9" text-anchor="middle" font-size="9.5" fill="#5f6b7a">예상</text>
+<text x="639.0" y="239.4" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">42%</text>
+<text x="639.0" y="277.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">5월</text>
+</svg>
+      <div class="clegend"><span><i style="background:#16915a"></i>정현이</span><span><i style="background:#cdd3dd"></i>나머지</span><span><i style="background:repeating-linear-gradient(45deg,#eef1f6,#eef1f6 3px,#b9c1ce 3px,#b9c1ce 6px)"></i>5월 잔여 예상</span></div>
+      <div class="tnote">5월 확정 <b>19,280건</b>(5/22까지, 14 작업일) → 잔여 ~5일 반영 시 전체 <b>~22,000건 예상</b>. 영지부 50% 분배로 리뷰팀 전체 물량은 감소.</div>
+      <h3 style="margin-top:26px">정현이(1인) 월별 일평균 (건/일)</h3>
+      <div class="cap">건수 총량이 아닌 <b>하루 처리 속도</b>.</div>
+      <svg viewBox="0 0 720 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'IBM Plex Sans',sans-serif">
+<defs><pattern id="he" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#bfe6cd"/><line x1="0" y1="0" x2="0" y2="7" stroke="#16915a" stroke-width="3"/></pattern></defs>
+<line x1="46" y1="250.0" x2="704" y2="250.0" stroke="#e9ecf1"/>
+<text x="38" y="254.0" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">0</text>
+<line x1="46" y1="181.2" x2="704" y2="181.2" stroke="#e9ecf1"/>
+<text x="38" y="185.2" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">200</text>
+<line x1="46" y1="112.5" x2="704" y2="112.5" stroke="#e9ecf1"/>
+<text x="38" y="116.5" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">400</text>
+<line x1="46" y1="43.8" x2="704" y2="43.8" stroke="#e9ecf1"/>
+<text x="38" y="47.8" text-anchor="end" font-size="11" fill="#9aa3b0" font-family="IBM Plex Mono">600</text>
+<line x1="46" y1="136.6" x2="704" y2="136.6" stroke="#5f6b7a" stroke-dasharray="5 4" opacity=".65"/>
+<text x="50" y="129.6" text-anchor="start" font-size="11" fill="#5f6b7a">1~3월 평균 ~330</text>
+<rect x="87.8" y="144.5" width="48" height="105.5" rx="6" fill="#9fb0e4"/>
+<text x="111.8" y="135.5" text-anchor="middle" font-size="14" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">307</text>
+<text x="111.8" y="271.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">1월</text>
+<rect x="219.4" y="124.9" width="48" height="125.1" rx="6" fill="#9fb0e4"/>
+<text x="243.4" y="115.9" text-anchor="middle" font-size="14" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">364</text>
+<text x="243.4" y="271.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">2월</text>
+<rect x="351.0" y="140.7" width="48" height="109.3" rx="6" fill="#9fb0e4"/>
+<text x="375.0" y="131.7" text-anchor="middle" font-size="14" font-weight="700" fill="#16202e" font-family="IBM Plex Mono">318</text>
+<text x="375.0" y="271.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">3월</text>
+<rect x="482.6" y="98.1" width="48" height="151.9" rx="6" fill="#16915a"/>
+<text x="506.6" y="89.1" text-anchor="middle" font-size="14" font-weight="700" fill="#16915a" font-family="IBM Plex Mono">442</text>
+<text x="506.6" y="271.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">4월</text>
+<rect x="614.2" y="75.4" width="48" height="174.6" fill="#16915a"/>
+<rect x="614.2" y="49.9" width="48" height="25.4" fill="url(#he)"/>
+<rect x="614.2" y="49.9" width="48" height="200.1" rx="6" fill="none" stroke="#16915a" stroke-width="1.5"/>
+<text x="638.2" y="90.4" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="IBM Plex Mono">508</text>
+<text x="638.2" y="40.9" text-anchor="middle" font-size="14" font-weight="700" fill="#16915a" font-family="IBM Plex Mono">582</text>
+<text x="638.2" y="271.0" text-anchor="middle" font-size="12.5" fill="#5f6b7a">5월*</text>
+<text x="638.2" y="285.0" text-anchor="middle" font-size="10" fill="#16915a">진행중</text>
+</svg>
+      <div class="tnote"><b>5월 진행중</b> · 실선 = 안정 일평균 <b>~508</b>(5/18 일회성 급증 제외) · 빗금 = 급증분(포함 시 582) · 전체월 예상 <b>~558</b>.</div>
+    </div>
+
+    <div style="margin:0 0 12px;font-family:'IBM Plex Sans','Noto Sans KR',sans-serif;font-weight:600;font-size:15px">1~5월 누적 지표</div>
+    <div class="kpis" style="margin-bottom:16px">
+      <div class="kpi"><div class="lab">1~5월 누적 완료</div><div class="val">168,084<span class="u">건</span></div><div class="sub neu">5개월 합계 <span class="lite">(5월 부분)</span></div></div>
+      <div class="kpi"><div class="lab">1~4월 월평균</div><div class="val">37,201<span class="u">건/월</span></div><div class="sub neu">안정적 처리량</div></div>
+      <div class="kpi up"><div class="lab">정현이 누적</div><div class="val">37,209<span class="u">건</span></div><div class="sub pos">전체의 22.1%</div></div>
+      <div class="kpi up"><div class="lab">정현이 월 비중</div><div class="val">16→42<span class="u">%</span></div><div class="sub pos">▲ 지속 상승</div></div>
+    </div>
+
+    <div class="panel pad">
+      <h3>처리자별 누적 비교 (1~5월)</h3>
+      <div class="cap">1인당 누적 처리량 비교 (1~5월)</div>
+      <svg viewBox="0 0 772 278" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'IBM Plex Sans',sans-serif">
+<text x="90" y="26.0" text-anchor="end" font-size="13" font-weight="600" fill="#16202e">차애란</text>
+<rect x="100" y="10.0" width="348.0" height="24" rx="5" fill="#cdd3dd"/>
+<text x="457.0" y="26.0" font-size="12.5" fill="#16202e" font-family="IBM Plex Mono"><tspan font-weight="700">49,732</tspan><tspan fill="#5f6b7a" font-family="Noto Sans KR" font-size="11.5">  ·  이관/퇴사</tspan></text>
+<text x="90" y="70.0" text-anchor="end" font-size="13" font-weight="600" fill="#16202e">정현이(1인)</text>
+<rect x="100" y="54.0" width="260.4" height="24" rx="5" fill="#16915a"/>
+<text x="369.4" y="70.0" font-size="12.5" fill="#16202e" font-family="IBM Plex Mono"><tspan font-weight="700">37,209</tspan></text>
+<text x="90" y="114.0" text-anchor="end" font-size="13" font-weight="600" fill="#16202e">조윤정</text>
+<rect x="100" y="98.0" width="244.0" height="24" rx="5" fill="#cdd3dd"/>
+<text x="353.0" y="114.0" font-size="12.5" fill="#16202e" font-family="IBM Plex Mono"><tspan font-weight="700">34,873</tspan><tspan fill="#5f6b7a" font-family="Noto Sans KR" font-size="11.5">  ·  이관/퇴사</tspan></text>
+<text x="90" y="158.0" text-anchor="end" font-size="13" font-weight="600" fill="#16202e">전혜은</text>
+<rect x="100" y="142.0" width="230.4" height="24" rx="5" fill="#cdd3dd"/>
+<text x="339.4" y="158.0" font-size="12.5" fill="#16202e" font-family="IBM Plex Mono"><tspan font-weight="700">32,928</tspan><tspan fill="#5f6b7a" font-family="Noto Sans KR" font-size="11.5">  ·  이관/퇴사</tspan></text>
+<text x="90" y="202.0" text-anchor="end" font-size="13" font-weight="600" fill="#16202e">윤예진</text>
+<rect x="100" y="186.0" width="84.3" height="24" rx="5" fill="#cdd3dd"/>
+<text x="193.3" y="202.0" font-size="12.5" fill="#16202e" font-family="IBM Plex Mono"><tspan font-weight="700">12,054</tspan><tspan fill="#5f6b7a" font-family="Noto Sans KR" font-size="11.5">  ·  퇴사(3월)</tspan></text>
+<text x="90" y="246.0" text-anchor="end" font-size="13" font-weight="600" fill="#16202e">최휘연·기타</text>
+<rect x="100" y="230.0" width="9.0" height="24" rx="5" fill="#cdd3dd"/>
+<text x="118.0" y="246.0" font-size="12.5" fill="#16202e" font-family="IBM Plex Mono"><tspan font-weight="700">1,288</tspan><tspan fill="#5f6b7a" font-family="Noto Sans KR" font-size="11.5">  ·  관리·신규</tspan></text>
+</svg>
+      <div class="tnote">차애란·조윤정·전혜은·윤예진이 이관/퇴사. 현재 리뷰팀은 <b>정현이(1인) + 영지부 5:5 분배</b>로 처리. 누적 합계 168,084건 기준.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="s-head"><span class="s-no">05</span><span class="s-title">처리자별 일별 추이</span><span class="s-sub">5/4 ~ 5/22</span></div>
+    <div class="panel pad">
+      <div class="heat"><div class="hgrid">
+<div class="hc corner"></div>
+<div class="hc hd"><b>4</b><span>월</span></div>
+<div class="hc hd"><b>6</b><span>수</span></div>
+<div class="hc hd"><b>7</b><span>목</span></div>
+<div class="hc hd"><b>8</b><span>금</span></div>
+<div class="hc hd"><b>11</b><span>월</span></div>
+<div class="hc hd"><b>12</b><span>화</span></div>
+<div class="hc hd"><b>13</b><span>수</span></div>
+<div class="hc hd p1"><em class="mk b">배정중단</em><b>14</b><span>목</span></div>
+<div class="hc hd"><b>15</b><span>금</span></div>
+<div class="hc hd p2"><em class="mk r">전혜은 이관</em><b>18</b><span>월</span></div>
+<div class="hc hd"><b>19</b><span>화</span></div>
+<div class="hc hd"><b>20</b><span>수</span></div>
+<div class="hc hd"><b>21</b><span>목</span></div>
+<div class="hc hd"><b>22</b><span>금</span></div>
+<div class="hc ht">합계</div>
+<div class="hc name">정현이</div>
+<div class="hcell" style="background:#1f4396;color:#ffffff">907</div>
+<div class="hcell" style="background:#2f519e;color:#ffffff">640</div>
+<div class="hcell" style="background:#4a69ad;color:#ffffff">539</div>
+<div class="hcell" style="background:#899fcd;color:#284069">306</div>
+<div class="hcell" style="background:#4160a8;color:#ffffff">575</div>
+<div class="hcell" style="background:#6f89c0;color:#ffffff">402</div>
+<div class="hcell" style="background:#637fba;color:#ffffff">445</div>
+<div class="hcell p1" style="background:#738cc2;color:#ffffff">388</div>
+<div class="hcell" style="background:#5673b2;color:#ffffff">497</div>
+<div class="hcell p2" style="background:#1f4396;color:#ffffff">1,538</div>
+<div class="hcell" style="background:#708ac0;color:#ffffff">398</div>
+<div class="hcell" style="background:#516fb0;color:#ffffff">514</div>
+<div class="hcell" style="background:#516eb0;color:#ffffff">515</div>
+<div class="hcell" style="background:#5875b4;color:#ffffff">487</div>
+<div class="hc tot">8,151</div>
+<div class="hc name">최휘연<small>신규·관리</small></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell p1" style="background:#c7d6ee;color:#284069">74</div>
+<div class="hcell" style="background:#b2c3e2;color:#284069">154</div>
+<div class="hcell p2" style="background:#cad8ef;color:#284069">64</div>
+<div class="hcell" style="background:#cddbf1;color:#284069">52</div>
+<div class="hcell" style="background:#abbedf;color:#284069">177</div>
+<div class="hcell" style="background:#d6e3f5;color:#284069">19</div>
+<div class="hcell" style="background:#d2dff3;color:#284069">35</div>
+<div class="hc tot">575</div>
+<div class="hc name dep">차애란<small>이관/퇴사</small></div>
+<div class="hcell" style="background:#1f4396;color:#ffffff">806</div>
+<div class="hcell" style="background:#5c78b6;color:#ffffff">474</div>
+<div class="hcell" style="background:#8098c9;color:#284069">338</div>
+<div class="hcell" style="background:#627db9;color:#ffffff">452</div>
+<div class="hcell" style="background:#2a4d9c;color:#ffffff">659</div>
+<div class="hcell" style="background:#91a7d2;color:#284069">274</div>
+<div class="hcell" style="background:#6e88bf;color:#ffffff">407</div>
+<div class="hcell p1" style="background:#7891c5;color:#ffffff">367</div>
+<div class="hcell" style="background:#c8d6ee;color:#284069">71</div>
+<div class="hcell p2" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hc tot">3,848</div>
+<div class="hc name dep">조윤정<small>이관/퇴사</small></div>
+<div class="hcell" style="background:#2b4e9c;color:#ffffff">655</div>
+<div class="hcell" style="background:#627eb9;color:#ffffff">449</div>
+<div class="hcell" style="background:#829aca;color:#284069">330</div>
+<div class="hcell" style="background:#90a5d1;color:#284069">281</div>
+<div class="hcell" style="background:#5975b4;color:#ffffff">485</div>
+<div class="hcell" style="background:#849bca;color:#284069">325</div>
+<div class="hcell" style="background:#7e96c8;color:#284069">346</div>
+<div class="hcell p1" style="background:#99add6;color:#284069">246</div>
+<div class="hcell" style="background:#ccdaf0;color:#284069">56</div>
+<div class="hcell p2" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hc tot">3,173</div>
+<div class="hc name dep">전혜은<small>이관/퇴사</small></div>
+<div class="hcell" style="background:#1f4396;color:#ffffff">847</div>
+<div class="hcell" style="background:#728cc1;color:#ffffff">390</div>
+<div class="hcell" style="background:#7f97c8;color:#284069">341</div>
+<div class="hcell" style="background:#98add5;color:#284069">248</div>
+<div class="hcell" style="background:#899fcd;color:#284069">306</div>
+<div class="hcell" style="background:#4766ab;color:#ffffff">551</div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell p1" style="background:#6681bb;color:#ffffff">434</div>
+<div class="hcell" style="background:#6b86be;color:#ffffff">416</div>
+<div class="hcell p2" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hcell" style="background:#f5f6f8;color:#cad1dc"></div>
+<div class="hc tot">3,533</div>
+</div></div>
+      <div class="heat-leg"><div>적음 <span class="bar"></span> 많음</div><div><span class="em"></span>빈칸 = 미처리(이관/퇴사)</div></div>
+    </div>
+  </section>
+
+  <div class="part" id="partB"><span class="pl">Part B</span><span class="pt">지난 2주 성과 &amp; 제도</span><span class="ln"></span></div>
+
+  <section>
+    <div class="s-head"><span class="s-no">06</span><span class="s-title">업무 성과</span><span class="s-sub">체계 정비 · 제도</span></div>
+    <div class="achv">
+      <div class="ac"><div class="chk">✓</div><div class="t">1인당 물량 상향</div><div class="d">집중 체계 안착으로 1인 일평균 <b>461 → 690건</b>.</div></div>
+      <div class="ac"><div class="chk">✓</div><div class="t">인센티브 제도 도입</div><div class="d">1인 평균 물량 <b>600건 이상</b>부터 <b>건당 100원</b> 인센티브 지급 기준 변경.</div></div>
+      <div class="ac"><div class="chk">✓</div><div class="t">업무보고 시트 전면 재구축</div><div class="d">기존 모든 업무보고 엑셀 시트를 새로 설계·구축. 일·주·월 자동 집계 체계로 정비.</div></div>
+      <div class="ac"><div class="chk">✓</div><div class="t">수당제 도입</div><div class="d">업무 수당제 도입 결정.<span class="tbd">금액·규정 미정</span></div></div>
+      <div class="ac"><div class="chk">✓</div><div class="t">불필요 업무 제거</div><div class="d">관행적으로 반복되던 불필요한 업무 보고·정리 작업 제거.</div></div>
+    </div>
+  </section>
+
+  <div class="part" id="partC"><span class="pl">Part C</span><span class="pt">인력 이슈</span><span class="ln"></span></div>
+
+  <!-- SCENARIOS -->
+  <section>
+    <div class="s-head"><span class="s-no">07</span><span class="s-title">정현이 잔류 시나리오</span><span class="s-sub">3개 케이스 · 운영 영향 비교</span></div>
+    <div class="scen">
+      <div class="sc good">
+        <div class="h"><span class="tag">Best</span><span class="pct">↑</span></div>
+        <div class="t">잔류 (6월 중순+ 유지)</div>
+        <div class="when">현 협의 + 리텐션 조건 수용</div>
+        <div class="row"><span>실가동 인력</span><span>1명 → +1 (이선주)</span></div>
+        <div class="row"><span>일평균 예상</span><span>≥ 600건/일</span></div>
+        <div class="row"><span>인센티브 부담</span><span>+₩180k~/월</span></div>
+        <div class="row"><span>리스크</span><span class="num">낮음</span></div>
+        <div class="resp"><b>대응</b> — 파트장 직급/수당 확정, 영지부 50% 분담 유지, 이선주 온보딩 가속</div>
+      </div>
+      <div class="sc mid">
+        <div class="h"><span class="tag">Likely</span><span class="pct">~</span></div>
+        <div class="t">6월 중하순 퇴사</div>
+        <div class="when">현 협의 시점 종료 후</div>
+        <div class="row"><span>실가동 인력</span><span>이선주 + 신규 1</span></div>
+        <div class="row"><span>일평균 예상</span><span>300~400건/일 (일시)</span></div>
+        <div class="row"><span>인계 부담</span><span class="num">높음</span></div>
+        <div class="row"><span>리스크</span><span class="num">중간</span></div>
+        <div class="resp"><b>대응</b> — 즉시 채용 착수, 영지부 분담 비중 일시 확대(60~70%), 인수인계 표준 적용</div>
+      </div>
+      <div class="sc bad">
+        <div class="h"><span class="tag">Worst</span><span class="pct">↓</span></div>
+        <div class="t">즉시 퇴사</div>
+        <div class="when">협의 결렬 시</div>
+        <div class="row"><span>실가동 인력</span><span>이선주 (온보딩 중)</span></div>
+        <div class="row"><span>일평균 예상</span><span>100~200건/일</span></div>
+        <div class="row"><span>물량 누수 위험</span><span class="num">매우 높음</span></div>
+        <div class="row"><span>리스크</span><span class="num">높음</span></div>
+        <div class="resp"><b>대응</b> — 영지부 100% 흡수 협조 요청, 거래처 일시 안내, 비상 채용 가속(2명 동시)</div>
+      </div>
+    </div>
+    <div class="tnote" style="margin-top:14px">시나리오는 1인 일평균 ~500~690건, 인센티브 600건+/건당 100원, 영지부 신규 50:50 분담을 기준으로 추정. 정확한 단가·비용은 §재무 economics 참조.</div>
+  </section>
+
+  <section>
+    <div class="s-head"><span class="s-no">08</span><span class="s-title">정현이 퇴사 사유 — 면담 정리</span><span class="s-sub">근본 원인 분류</span></div>
+    <div class="panel pad">
+      <div class="res-cats">
+        <div class="rcat"><div class="ct"><span class="pip"></span>직무에 대한 근본적 의문</div><ul>
+          <li>입사 초부터 지속 가능성에 의문</li>
+          <li>전공 관련 직무 전환 위해 야근·주말 많던 전직장을 그만두고 입사</li>
+          <li>1인 기준치 설정은 곧 야근 가능성 → 업무 강도가 세질 것 같음</li>
+          <li>업무 체계 전면 변화는 배우고 싶지만, 정리하기보다 바탕화면 메모장에 정리하며 일하는 게 더 빠를 것 같다는 생각</li>
+          <li>현재 처리 속도가 본인에게 익숙해진 상태라, 신규 도입 방법들엔 궁금하나 반감</li></ul></div>
+        <div class="rcat"><div class="ct"><span class="pip"></span>업무 온·오프 부재</div><ul>
+          <li>마감 후에도 잘못 구매한 리뷰어 응대 등 퇴근 후에도 신경</li>
+          <li>리뷰어가 알림 끄고 개인 카톡 직접 연락 요구하는 문화</li>
+          <li>회사가 리뷰에 집중해 체계를 바꾸면 온·오프는 더 없어질 것 같음</li></ul></div>
+        <div class="rcat"><div class="ct"><span class="pip"></span>관리자 부재 부담</div><ul>
+          <li>헤더 2명 퇴사를 3일 전 인지</li>
+          <li>본부장+신규 관리자가 실무 미숙한 상태임을 알게 됨</li>
+          <li>혜은까지 퇴사하며 부담 가중</li>
+          <li>관리자 2명 중 1명만 정리했다면 이렇게까지 상황이 복잡해지지 않았을 것이라 생각</li></ul></div>
+        <div class="rcat"><div class="ct"><span class="pip"></span>연차 대비 책임 과중</div><ul>
+          <li>입사 6개월 미만인데 동료들이 모든 것을 문의</li>
+          <li>관리자들이 인수인계 없이 퇴사</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="part" id="partD"><span class="pl">Part D</span><span class="pt">운영 이슈 &amp; 계획</span><span class="ln"></span></div>
+
+  <section>
+    <div class="s-head"><span class="s-no">09</span><span class="s-title">전체 리뷰 throughput</span><span class="s-sub">4갈래 · 처리부서 기준</span></div>
+    <div class="panel pad">
+      <h3>처리 경로별 완료건수</h3>
+      <div class="cap">리뷰 물량은 <b>네 갈래</b>로 처리 — ① 리뷰팀 ② 영지부의 리뷰팀 파견 ③ 영지부 직접 ④ 영업부 직접. 현재는 ①만 집계되어, 전체 규모는 나머지 통계가 합산돼야 파악 가능.</div>
+      <div class="dept">
+        <div class="deptrow"><span class="nm">① 리뷰팀<small>정현이·최휘연</small></span><div class="tr"><div class="fl" data-w="56">3,799</div></div><span class="rt">집계됨</span></div>
+        <div class="deptrow"><span class="nm">② 영지부 파견<small>리뷰팀 내 처리</small></span><div class="tr empty"><span>통계 미집계</span></div><span class="rt q">데이터 필요</span></div>
+        <div class="deptrow"><span class="nm">③ 영지부 직접<small>자체 진행</small></span><div class="tr empty"><span>통계 미집계</span></div><span class="rt q">데이터 필요</span></div>
+        <div class="deptrow"><span class="nm">④ 영업부 직접<small>자체 진행</small></span><div class="tr empty"><span>통계 미집계</span></div><span class="rt q">데이터 필요</span></div>
+        <div class="deptrow" style="border-top:2px solid var(--line);padding-top:14px"><span class="nm" style="font-weight:600">전체 합계</span><div class="tr empty"><span>산출 불가 (현재)</span></div><span class="rt q">—</span></div>
+      </div>
+      <div class="tnote">각 부서 취합 자료가 모여야 리뷰 전체 파악 가능 — 현 구조에선 ②③④ 경로에서 누락·누수가 생겨도 추적·책임 주체가 없음. <b style="color:#c33">전 부서 통계 합산 체계 필요.</b></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="s-head"><span class="s-no">10</span><span class="s-title">쿠팡파트너스 집중 도입</span><span class="s-sub"><span class="cp-when">⏱ 돌아오는 주부터</span></span></div>
+    <div class="panel">
+      <div class="pad" style="padding-bottom:14px"><div class="cap" style="margin:0">그간 리뷰팀·영지부 모두 업무 과부하로 도입을 미뤄왔으며, 인력·물량이 정리되는 차주부터 본격 도입.</div></div>
+      <div class="cp">
+        <div class="m"><div class="mh"><span class="mn">1</span><span class="mt">키워드 검색 캠페인</span></div>
+          <ul class="flow">
+            <li><span class="step">1</span>픽스된 <b>굿투 쿠팡파트너스 확정 링크</b> 사전 공지</li>
+            <li><span class="step">2</span>리뷰어는 <b>항상 이 링크로 먼저 진입</b></li>
+            <li><span class="step">3</span>진입 후 <b>키워드로 직접 검색해 구매</b> 요청</li></ul></div>
+        <div class="m"><div class="mh"><span class="mn">2</span><span class="mt">링크 캠페인</span></div>
+          <ul class="flow">
+            <li><span class="step">1</span>굿투 쿠팡파트너스 <b>로그인</b></li>
+            <li><span class="step">2</span>해당 캠페인 <b>링크 변환 가능 여부</b> 확인
+              <div class="branch"><span class="b ok">✓ 가능 — 즉시 링크 변환</span><span class="b no">✗ 불가 — 제품을 1페이지에 노출시킨 뒤 그 페이지 링크 새로 생성</span></div></li></ul></div>
+      </div>
+      <div class="cp-why"><span class="ic">i</span><p><b>운영 원칙</b> — 방법 2는 접속 시 대표님 정보·실제 수익이 노출됨. 따라서 팀원에게 아이디를 배분하지 않고, <b>다소 번거롭더라도 관리자측에서 직접 처리</b>.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="s-head"><span class="s-no">11</span><span class="s-title">운영 이슈</span><span class="s-sub">구조적 · 인수인계</span></div>
+    <div class="panel pad">
+      <div class="issues" style="display:flex;flex-direction:column;gap:13px">
+        <div style="border:1px solid var(--line);border-left:4px solid var(--hot);border-radius:10px;padding:16px 18px;background:#fff">
+          <div style="font-weight:600;font-size:14.5px;margin-bottom:6px;display:flex;align-items:center;gap:9px">페이백(정산) 지연 → 리뷰어 이탈 <span style="font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--hot-soft);color:var(--hot)">구조적·최우선</span></div>
+          <div style="font-size:13px;color:#3f4a5c;line-height:1.6">출금신청 후 <b>한 달 넘게 정산이 지연</b>되고, 최근 <b>기존보다 더 느려져 리뷰어 문의·항의가 급증</b>. 일정 단축 요청은 회사 사정상 반려. <b>참여율 저하의 근본 원인</b>으로, 신규 모집만으로는 해소되지 않음.</div>
+        </div>
+        <div style="border:1px solid var(--line);border-left:4px solid var(--hot);border-radius:10px;padding:16px 18px;background:#fff">
+          <div style="font-weight:600;font-size:14.5px;margin-bottom:6px;display:flex;align-items:center;gap:9px">전혜은 인수인계 부담 <span style="font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--hot-soft);color:var(--hot)">진행중</span></div>
+          <div style="font-size:13px;color:#3f4a5c;line-height:1.6">퇴사자(전혜은)가 <b>캠페인을 비정상적으로 등록해 둔 건이 다수</b>. 이관 이후 정리·처리에 어려움.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINANCIAL ECONOMICS -->
+  <div class="part" id="partE"><span class="pl">Part E</span><span class="pt">재무 economics</span><span class="ln"></span></div>
+
+  <section>
+    <div class="s-head"><span class="s-no">12</span><span class="s-title">거래처 TOP 5 &amp; 단가 분석</span><span class="s-sub">5월 누계</span></div>
+    <div class="panel pad" style="margin-bottom:16px">
+      <h3>거래처별 처리 규모 &amp; 실행 단가</h3>
+      <div class="cap">건수 × 단가로 산정한 5월 누적 실행 규모.</div>
+      <table class="dt">
+        <thead><tr><th>거래처</th><th class="r">건수</th><th class="r">실행비용 (₩)</th><th class="r">건당 단가</th><th class="r">비중</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">성의통상</td><td class="r">3,144</td><td class="r">5,187,600</td><td class="r">1,650</td><td class="r">52.0%</td></tr>
+          <tr><td class="lbl">흐름컴퍼니</td><td class="r">2,286</td><td class="r">1,573,800</td><td class="r">689</td><td class="r">15.8%</td></tr>
+          <tr><td class="lbl">와이에스코스</td><td class="r">1,160</td><td class="r">1,914,000</td><td class="r">1,650</td><td class="r">19.2%</td></tr>
+          <tr><td class="lbl">스카이벤처스</td><td class="r">831</td><td class="r">720,750</td><td class="r">867</td><td class="r">7.2%</td></tr>
+          <tr><td class="lbl">풀로디드</td><td class="r">564</td><td class="r">588,200</td><td class="r">1,043</td><td class="r">5.9%</td></tr>
+          <tr class="hl"><td class="lbl">TOP 5 합계</td><td class="r"><b>7,985</b></td><td class="r"><b>9,984,350</b></td><td class="r"><b>~1,250</b></td><td class="r"><b>100%</b></td></tr>
+        </tbody>
+      </table>
+      <div class="tnote">단가 편차 큼 — 성의통상·와이에스코스(₩1,650)는 비중 71%로 핵심 매출원. 흐름컴퍼니(₩689)는 건수 대비 단가 낮음 → 수익성 점검 필요.</div>
+    </div>
+
+    <div class="fin-grid" style="margin-bottom:16px">
+      <div class="fin-card">
+        <h4>5월 누계 실행 규모 (TOP5)</h4>
+        <div class="val">₩9,984,350<span class="u">/ 7,985건</span></div>
+        <div class="nt">건당 평균 ₩1,250 · TOP5는 5월 총 ~19,280건의 41.4%</div>
+      </div>
+      <div class="fin-card">
+        <h4>예상 5월 전체 실행 규모</h4>
+        <div class="val">~₩24~28M<span class="u">추정</span></div>
+        <div class="nt">전체 ~22,000건 × 평균 ₩1,100~1,300 (단가 분포 가정)</div>
+      </div>
+    </div>
+
+    <div class="panel pad">
+      <h3>인력 비용 임팩트 (인센티브 + 수당)</h3>
+      <div class="cap">600건+ 인센티브와 수당제 도입 시 예상 부담.</div>
+      <div class="fin-row"><span class="l">정현이 5월 일평균 (안정)</span><span class="v">508 건/일</span></div>
+      <div class="fin-row"><span class="l">600건/일 초과분 (인센티브 대상)</span><span class="v warn">~90 건/일 × 20일 = 1,800건</span></div>
+      <div class="fin-row"><span class="l">월 인센티브 (건당 ₩100)</span><span class="v warn">~₩180,000 / 월</span></div>
+      <div class="fin-row"><span class="l">690건 일평균 유지 시</span><span class="v warn">~₩180,000 ~ 360,000 / 월</span></div>
+      <div class="fin-row"><span class="l">수당제 (금액 미정)</span><span class="v">TBD — D4 결재 필요</span></div>
+      <div class="fin-row"><span class="l">신규 인력 1명 채용 시</span><span class="v hot">+ 인건비 / 월</span></div>
+      <div class="tnote">인센티브는 600건/일 기준 ~₩18만/월 수준이나, 690건 유지 시 최대 ₩36만. 수당제 금액 확정 전엔 총비용 산정 불가. <b>채용 1명 + 수당 확정 시 인건비 구조 시뮬레이션 필요.</b></div>
+    </div>
+  </section>
+
+  <!-- ACTION TRACKER -->
+  <div class="part" id="actions"><span class="pl">Actions</span><span class="pt">액션 트래커</span><span class="ln"></span></div>
+
+  <section>
+    <div class="s-head"><span class="s-no">13</span><span class="s-title">차주 액션 — 담당 · 기한 · 상태</span><span class="s-sub">총 12건</span></div>
+    <div class="panel" style="overflow-x:auto">
+      <table class="act-tbl">
+        <thead><tr>
+          <th>#</th><th>액션</th><th>담당</th><th>기한</th><th>우선순위</th><th>상태</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td data-label="#" class="num">A1</td>
+            <td data-label="액션" class="tit">정현이 리텐션 + 후속 면담<small>6월 중순까지 유지 협의 이행. 본부장 추가 면담·세부 조건 협의. 파트장 제안은 시간 두고 재논의.</small></td>
+            <td data-label="담당" class="owner">최휘연·본부장</td>
+            <td data-label="기한" class="due">~ 6/01</td>
+            <td data-label="우선순위"><span class="pill p-h">긴급</span></td>
+            <td data-label="상태"><span class="pill s-go">진행중</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A2</td>
+            <td data-label="액션" class="tit">신규 채용 (+1명 추가)<small>이선주 입사 완료. 정현이 퇴사 대비 1명 더 보충 필요.</small></td>
+            <td data-label="담당" class="owner">최휘연</td>
+            <td data-label="기한" class="due">~ 6/15</td>
+            <td data-label="우선순위"><span class="pill p-h">긴급</span></td>
+            <td data-label="상태"><span class="pill s-rev">결재 대기</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A3</td>
+            <td data-label="액션" class="tit">물량 재배치 → 1인 600건 안정화<small>영지부 신규 분배 축소 + 이선주 쉬운 물량부터 + 정현이 집중.</small></td>
+            <td data-label="담당" class="owner">최휘연</td>
+            <td data-label="기한" class="due">~ 5/30</td>
+            <td data-label="우선순위"><span class="pill p-h">긴급</span></td>
+            <td data-label="상태"><span class="pill s-go">진행중</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A4</td>
+            <td data-label="액션" class="tit">쿠팡파트너스 도입<small>유형별 진행 방식 확정. 아이디 미배분·관리자 직접 처리 (상세 §10).</small></td>
+            <td data-label="담당" class="owner">최휘연</td>
+            <td data-label="기한" class="due">차주 (5/26~)</td>
+            <td data-label="우선순위"><span class="pill p-m">높음</span></td>
+            <td data-label="상태"><span class="pill s-go">준비 완료</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A5</td>
+            <td data-label="액션" class="tit">측정 지표 재정의<small>부대표님 의견 수렴 후 재정의. 안 빠지는 물량 제거는 직원 몫이라는 관점 반영.</small></td>
+            <td data-label="담당" class="owner">부대표·최휘연</td>
+            <td data-label="기한" class="due">~ 6/15</td>
+            <td data-label="우선순위"><span class="pill p-m">높음</span></td>
+            <td data-label="상태"><span class="pill s-rev">의견 수렴</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A6</td>
+            <td data-label="액션" class="tit">수당 금액·규정 픽스<small>도입 결정된 수당제의 금액·지급 규정 확정.</small></td>
+            <td data-label="담당" class="owner">본부장·최휘연</td>
+            <td data-label="기한" class="due">~ 6/30</td>
+            <td data-label="우선순위"><span class="pill p-m">높음</span></td>
+            <td data-label="상태"><span class="pill s-tbd">금액 TBD</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A7</td>
+            <td data-label="액션" class="tit">영지부·영업부 통계 합산 체계<small>전 부서 통합 집계 표준 도입. 현재 ①만 집계 — 누락 추적 불가.</small></td>
+            <td data-label="담당" class="owner">최휘연·각 부서장</td>
+            <td data-label="기한" class="due">~ 6/15</td>
+            <td data-label="우선순위"><span class="pill p-m">높음</span></td>
+            <td data-label="상태"><span class="pill s-pen">제안 단계</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A8</td>
+            <td data-label="액션" class="tit">네오리뷰 추가 건의<small>네오리뷰 도입·확대 상위 보고로 추가 건의.</small></td>
+            <td data-label="담당" class="owner">최휘연</td>
+            <td data-label="기한" class="due">~ 6/15</td>
+            <td data-label="우선순위"><span class="pill p-m">중간</span></td>
+            <td data-label="상태"><span class="pill s-rev">검토 중</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A9</td>
+            <td data-label="액션" class="tit">팀원 노션 지속 구축<small>팀원용 노션 업무 공간 지속 구축 중.</small></td>
+            <td data-label="담당" class="owner">최휘연</td>
+            <td data-label="기한" class="due">지속</td>
+            <td data-label="우선순위"><span class="pill p-l">중간</span></td>
+            <td data-label="상태"><span class="pill s-go">진행중</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A10</td>
+            <td data-label="액션" class="tit">공석 인수인계 방식 표준화<small>퇴사·공석 발생 시 인수인계 표준 방식 마련. 전혜은 케이스 교훈 반영.</small></td>
+            <td data-label="담당" class="owner">최휘연</td>
+            <td data-label="기한" class="due">~ 6/30</td>
+            <td data-label="우선순위"><span class="pill p-m">중간</span></td>
+            <td data-label="상태"><span class="pill s-pen">미착수</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A11</td>
+            <td data-label="액션" class="tit">리뷰팀 온보딩 체계 구축<small>신규 입사자용 리뷰팀 온보딩 문서·과정 체계화.</small></td>
+            <td data-label="담당" class="owner">최휘연</td>
+            <td data-label="기한" class="due">~ 6/30</td>
+            <td data-label="우선순위"><span class="pill p-m">중간</span></td>
+            <td data-label="상태"><span class="pill s-pen">미착수</span></td>
+          </tr>
+          <tr>
+            <td data-label="#" class="num">A12</td>
+            <td data-label="액션" class="tit">신규 리뷰어 모집<small>지속 진행 중 — 단체 톡방에 매일 모집 공지 발송.</small></td>
+            <td data-label="담당" class="owner">전체</td>
+            <td data-label="기한" class="due">지속</td>
+            <td data-label="우선순위"><span class="pill p-l">낮음</span></td>
+            <td data-label="상태"><span class="pill s-go">진행중</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="appx">
+    <div class="appx-h"><span class="tag2">참고</span><span class="tt">최휘연 근무 현황</span><span class="sub">5/11~22</span></div>
+    <div class="att sm">
+<div class="day"><div class="dh"><span class="dd">11</span><span class="dw">월</span></div><span class="tg study">학습</span><div class="dn">캠페인 등록 실무 인수인계 받으며 공부</div></div>
+<div class="day"><div class="dh"><span class="dd">12</span><span class="dw">화</span></div><span class="tg study">학습</span><div class="dn">캠페인 등록 실무 인수인계 받으며 공부</div></div>
+<div class="day"><div class="dh"><span class="dd">13</span><span class="dw">수</span></div><span class="tg remote">비대면</span><div class="dn">쉬운 물량으로 실무 체험</div></div>
+<div class="day"><div class="dh"><span class="dd">14</span><span class="dw">목</span></div><span class="tg remote">비대면</span><div class="dn">헤더 업무 시작 + 실무 소량</div></div>
+<div class="day"><div class="dh"><span class="dd">15</span><span class="dw">금</span></div><span class="tg remote">비대면</span><div class="dn">헤더 집중 + 실무 소량</div></div>
+<div class="day"><div class="dh"><span class="dd">18</span><span class="dw">월</span></div><span class="tg leave">연차</span><div class="dn">병원</div></div>
+<div class="day"><div class="dh"><span class="dd">19</span><span class="dw">화</span></div><span class="tg onsite">대면</span><div class="dn">출근</div></div>
+<div class="day"><div class="dh"><span class="dd">20</span><span class="dw">수</span></div><span class="tg onsite">대면</span><div class="dn">출근</div></div>
+<div class="day"><div class="dh"><span class="dd">21</span><span class="dw">목</span></div><span class="tg onsite">대면</span><div class="dn">출근</div></div>
+<div class="day"><div class="dh"><span class="dd">22</span><span class="dw">금</span></div><span class="tg leave">연차</span><div class="dn">병원 + 비대면 업무</div></div>
+</div>
+  </div>
+
+  <footer>
+    <span>리뷰팀 주간 운영 보고 · 2026년 5월 (핵심 3주차 5/18~22) · GOOD TO GREAT</span>
+    <span class="num">작성자 최휘연 · 2026-05-23 · v2</span>
+  </footer>
+</div>
+<script>
+  window.addEventListener('load',()=>{setTimeout(()=>{document.querySelectorAll('.fl').forEach(f=>f.style.width=f.dataset.w+'%');},160);});
+  // active nav indicator
+  const ids=['decisions','risks','partA','partB','partC','partD','partE','actions'];
+  const links={};
+  document.querySelectorAll('.nav a').forEach(a=>{const id=a.getAttribute('href').replace('#','');if(ids.includes(id))links[id]=a;});
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        Object.values(links).forEach(a=>a.classList.remove('on'));
+        const id=e.target.id; if(links[id])links[id].classList.add('on');
+      }
+    });
+  },{rootMargin:'-30% 0px -60% 0px'});
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)io.observe(el);});
+</script>
+</body>
+</html>
