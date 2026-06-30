@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>리뷰팀 주간 대시보드 · 2026-06-12</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--navy:#1f3864;--navy2:#2e4d7b;--ink:#1c2430;--mut:#6b7686;--line:#e7eaf0;--bg:#f4f6f9;--card:#fff;--red:#c0392b;--grn:#1e8449;--amb:#b9770e;--amber-bg:#fff7e6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 22px 70px}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:26px 22px;margin-bottom:24px}
+header .in{max-width:1240px;margin:0 auto}
+header h1{font-size:24px;font-weight:800;letter-spacing:-.5px}
+header .sub{opacity:.85;font-size:13px;margin-top:6px}
+.tag{display:inline-block;background:rgba(255,255,255,.16);padding:3px 10px;border-radius:20px;font-size:11px;margin-right:6px}
+h2{font-size:17px;font-weight:800;margin:34px 0 14px;padding-left:11px;border-left:4px solid var(--navy);letter-spacing:-.3px}
+h2 small{font-weight:500;color:var(--mut);font-size:12px;margin-left:8px}
+.grid{display:grid;gap:14px;align-items:start}
+.kpis{grid-template-columns:repeat(6,1fr)}
+@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px}
+.kpi .lab{font-size:12px;color:var(--mut);font-weight:600}
+.kpi .now{font-size:26px;font-weight:800;margin-top:4px;letter-spacing:-1px}
+.kpi .now small{font-size:13px;color:var(--mut);font-weight:600;margin-left:2px}
+.kpi .cmp{font-size:11px;color:var(--mut);margin-top:6px}
+.kpi .d{font-weight:800;font-size:12px;padding:1px 7px;border-radius:6px;margin-left:4px}
+.d.dn{color:var(--red);background:#fdecea}.d.up{color:var(--grn);background:#e9f7ef}
+.cards{grid-template-columns:repeat(2,1fr)}
+.ch3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:980px){.cards,.ch3{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.card h3{font-size:14px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.card h3 .ic{width:22px;height:22px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;font-size:12px}
+.chartbox{position:relative;height:230px}
+.tall{height:300px}
+ul.li{list-style:none}
+ul.li li{position:relative;padding:6px 0 6px 16px;font-size:13px;border-bottom:1px dashed var(--line)}
+ul.li li:last-child{border-bottom:0}
+ul.li li::before{content:'';position:absolute;left:2px;top:13px;width:5px;height:5px;border-radius:50%;background:var(--navy)}
+ul.li li.warn::before{background:var(--red)}ul.li li.ok::before{background:var(--grn)}
+.k{font-weight:800;color:var(--navy)}
+.rd{color:var(--red);font-weight:700}.gn{color:var(--grn);font-weight:700}
+.amberbox{background:var(--amber-bg);border:1px solid #ffe2a8;border-radius:10px;padding:10px 13px;font-size:12.5px;margin-top:10px}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:#eef1f6;color:var(--navy2);margin:2px 3px 0 0}
+.foot{margin-top:34px;font-size:11px;color:var(--mut);text-align:center}
+.nlink{display:inline-block;margin-top:10px;font-size:11px;font-weight:700;color:#fff;background:var(--navy);text-decoration:none;padding:5px 11px;border-radius:8px}
+.nlink:hover{background:var(--navy2)}
+.actrow{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.actrow:last-child{border:0}
+.actrow b{flex:0 0 84px;color:var(--navy);font-size:12px}
+</style></head><body>
+<header><div class="in">
+<h1>GOOD TO GREAT 리뷰팀 · 주간 업무 보고</h1>
+<div class="sub"><span class="tag">분석기간 2026.05.04 ~ 06.12</span></div>
+</div></header>
+<div class="wrap">
+
+<h2>① 핵심 지표 <small>5월 → 6월(1~12일, 부분)</small></h2>
+<div class="grid kpis" id="kpis"></div>
+<div class="amberbox"><b>요약</b> &nbsp;처리량 <span class="rd">평일 일평균 -64%</span> 급감 · 신입 흡수 진행 중이나 격차 큼 · 단, <span class="gn">외주·영업부 직접진행 확대로 신입 과부하는 완화</span> · <span class="rd">모집 충족률 80→64%·완수율 68→37%</span> 동반 하락(미모집 누적 1.2만건·성의통상 4,310 최다)</div>
+
+<h2>② 모집 충족 & 처리량 <small>충족률·완수율 중심</small></h2>
+<div class="grid cards">
+<div class="card"><h3>주차별 모집 충족률 &amp; 완수율 <span style="font-weight:500;color:var(--mut);font-size:11px">(요청 대비 채운 비율)</span></h3><div class="chartbox tall"><canvas id="cFul"></canvas></div><div style="font-size:11px;color:var(--mut);margin-top:10px;line-height:1.6"><b style="color:var(--navy)">건수 충족률</b> = 요청 건수 중 실제 채운 % (부분 채움 포함) &nbsp;·&nbsp; <b style="color:var(--red)">완수 캠페인율</b> = 미모집 0, 정량 100% 채운 캠페인 비율</div></div>
+<div class="card"><h3>주차별 처리량 (5월 vs 6월)</h3><div class="chartbox tall"><canvas id="cWeek"></canvas></div></div>
+</div>
+<div class="grid cards" style="margin-top:14px">
+<div class="card"><h3>거래처별 미모집 누수 TOP10 <span style="font-weight:500;color:var(--mut);font-size:11px">(요청 대비 못 채운 건수)</span></h3><div class="chartbox"><canvas id="cLeak"></canvas></div></div>
+<div class="card"><h3>처리자별 5월 vs 6월 <span style="font-weight:500;color:var(--mut);font-size:11px">(인력 이탈)</span></h3><div class="chartbox"><canvas id="cProc"></canvas></div></div>
+</div>
+<div class="grid cards" style="margin-top:14px">
+<div class="card"><h3>처리자별 일일 평균 <span style="font-weight:500;color:var(--mut);font-size:11px">(완료 ÷ 본인 근무일)</span></h3><div class="chartbox tall"><canvas id="cPavg"></canvas></div></div>
+<div class="card"><h3>생산성 격차 해석</h3>
+<ul class="li">
+<li>기존 실무진(퇴사) 일평균 <span class="k">350~400건대</span> — 신입 대비 2~3배</li>
+<li class="warn">신입 <span class="k">권수민 160건</span>(5/28~, 14일) — 기존의 약 38% 수준이나 6월 상승세(6월만 보면 200)</li>
+</ul></div>
+</div>
+
+<h2>③ 장기 추세 & 저번 보고 대비 <small>전주(5월 3주차, 5/23 작성) 연계</small></h2>
+<div class="grid cards">
+<div class="card"><h3>월별 팀 처리량 (1~6월)</h3><div class="chartbox"><canvas id="cMon"></canvas></div></div>
+<div class="card"><h3>단일 인력 의존도 추이 <span style="font-weight:500;color:var(--mut);font-size:11px">(1인 최대 처리 비중%)</span></h3><div class="chartbox"><canvas id="cShare"></canvas></div></div>
+</div>
+<div class="grid cards" style="margin-top:14px">
+<div class="card"><h3>전주(5/3주차) → 현재 변화</h3>
+<ul class="li">
+<li>장기 우하향: <span class="k">1월 41,259 → 5월 22,729(반토막) → 6월 급감</span> (직접진행으로 물량 분산돼 <span class="rd">데이터상 현재 상태 확인 불가</span>)</li>
+<li>1인 의존도 16→26→<span class="rd">42%</span>(5월) 심화 — <span class="k">1인당 물량 상향 목표는 충족</span></li>
+<li class="ok">단, 온보딩·채용·시스템·네오리뷰는 진전</li>
+</ul></div>
+<div class="card"><h3>저번 보고 액션 11건 진행 점검</h3>
+<ul class="li">
+<li class="ok">출퇴근 시간 변경 → 9:30~18:30</li>
+<li class="ok">신규 채용(+1) → 권수민·조엠마·진혜빈 + 화요일 면접</li>
+<li class="ok">1인 목표 → <span class="k">550건</span>으로 하향 조정</li>
+<li class="ok">쿠팡파트너스 → 시작</li>
+<li class="ok">리뷰팀 온보딩 구축 → 진행</li>
+<li class="ok">네오리뷰 → 셋팅 완료·오픈 가능 상태</li>
+<li class="ok">수당 픽스 → 평일 550↑100원 / 주말 &amp; 연장근로수당</li>
+</ul></div>
+</div>
+
+<h2>④ 구조 분석 <small>거래처 · 상품유형 · 채널 · 요청부서</small></h2>
+<div class="grid cards">
+<div class="card"><h3>거래처 TOP10 (누적 처리)</h3><div class="chartbox tall"><canvas id="cAcct"></canvas></div></div>
+<div class="card"><h3>상품유형 비중</h3><div class="chartbox tall"><canvas id="cType"></canvas></div></div>
+</div>
+<div class="grid cards" style="margin-top:14px">
+<div class="card"><h3>채널 TOP10</h3><div class="chartbox"><canvas id="cChan"></canvas></div></div>
+<div class="card"><h3>요청부서 (5월 vs 6월)</h3><div class="chartbox"><canvas id="cDept"></canvas></div></div>
+</div>
+
+<h2>⑤ 운영 현황</h2>
+<div class="grid cards">
+<div class="card"><h3>성의통상 운영 이슈 <span style="font-weight:500;color:var(--mut);font-size:11px">(매출 1위·약 56%)</span></h3>
+<ul class="li">
+<li><span class="k">규모</span> — 화·금 접수, 7개 플랫폼 × 90~200건 + 옵션별 오전/오후 배분 상이 → <span class="k">등록 부하 큼</span></li>
+<li class="warn"><span class="k">접수 시점</span> — 매번 17~18시 도착 → <span class="rd">사실상 야근 강제</span></li>
+<li class="warn"><span class="k">가이드 부실</span> — <span class="rd">제대로 온 적이 단 한 번도 없음</span>: 수량 불일치(전체≠오전/오후)·오후 계산 시 12시 초과·색상/링크 누락 → 매번 재확인, 파악 못 한 채 야근 등록 → 다음날 재수정</li>
+<li><span class="k">조율</span> — 나민서 매니저·담당자와 통화해도 <span class="rd">조율 불가</span> (단, 일정만 맞추면 가능 → 의지 문제로 보임)</li>
+</ul></div>
+
+<div class="card"><h3>인력 · 인사</h3>
+<ul class="li">
+<li class="ok">영지부 직접진행건 <span class="k">순차 리뷰팀 이관 시작</span> (금요일~)</li>
+<li>채용: 화요일 30대 면접 → <span class="k">신입+관리자 가능성</span> 타진</li>
+</ul></div>
+
+<div class="card"><h3>시스템 개선 요청 <span class="pill" style="background:#fff3cd;color:#b9770e">답변O · 액션X</span></h3>
+<ul class="li">
+<li class="warn">총 <span class="k">44개 요청사항 + 백로그 5개</span> — 답변은 받았으나 <span class="rd">실제 반영(액션)은 없음</span></li>
+<li>주요: 캠페인명 마스킹 / 쿠팡파트너스 랜딩 링크 / 영수증 금액 자동입력 / 타 플랫폼 주문번호 읽기 오류</li>
+<li><span class="k">네오리뷰</span> 세팅완료·오픈 가능이라지만 <span class="rd">바뀐 게 없어 오픈 실익 의문</span></li>
+</ul><a class="nlink" href="https://www.notion.so/10c709a2f4a083ea87158179654e30a6?v=791709a2f4a082ae992a086ba85dee18" target="_blank">요청사항 리스트</a></div>
+
+<div class="card"><h3>회의 결정 · 정산</h3>
+<ul class="li">
+<li>5/18(대표 출근) 기준 영지부·리뷰팀 전원 <span class="k">인센티브+수당 시작</span> (측정 기준 영지부 이의 → 거절)</li>
+<li class="warn">페이백 공지 일주일 경과 — <span class="rd">실질 개선 체감 0</span>, 리뷰어 "공지만으론 납득 안 됨·언제 바뀌나" 반응 다수</li>
+</ul></div>
+</div>
+
+<h2>⑥ 팀원 현황 & 평가 <small>현재 실무진 (전원 신규)</small></h2>
+<div class="grid ch3">
+<div class="card"><h3>권수민 <span class="pill">신입·관망</span></h3>
+<ul class="li">
+<li class="ok">사고는 대부분 <span class="k">초기 건</span> — 현재 큰 사고 없이 지수님 피드백 잘 수용</li>
+<li class="ok">파일 정리·요청 처리·사고 수습 <span class="k">많이 개선</span></li>
+<li class="warn">세부 디테일 오류 잔존 → 반복 피드백 시 개선 전망 / <span class="rd">+α는 미지수</span></li>
+<li>본부장이 영지부로 채용했으나 리뷰팀 배치 → 본인 "영지부 언제?" 반복 질의 → <span class="k">본부장: 영지부 불가</span></li>
+</ul></div>
+<div class="card"><h3>조엠마 <span class="pill" style="background:#e9f7ef;color:#1e8449">우수</span></h3>
+<ul class="li">
+<li class="ok">입사 1주차에 <span class="k">습득 빠름</span> — 3일째부터 실무 배분, 노션 즉시 활용</li>
+<li class="ok"><span class="k">큰 업체부터 이관 계획</span> — "정현이 보는 느낌"</li>
+<li>후임으로 적격이나 <span class="rd">나이 어림</span> · 엑셀/OA 무경험(금방 습득 전망)</li>
+</ul></div>
+<div class="card"><h3>진혜빈 <span class="pill" style="background:#fdecea;color:#c0392b">지켜봐야</span></h3>
+<ul class="li">
+<li class="warn">블로그 경력 있다지만 <span class="rd">습득 느림</span>(엠마 대비)</li>
+<li class="warn"><span class="rd">집중도 이슈</span> — 연습 다수 배분했으나 못 끝낸 채 핸드폰 등, 이틀째도 분량 미완·귀가</li>
+<li class="warn">피드백 <span class="rd">방어적 반응 먼저</span> + 이미 피드백한 부분 반복 틀림</li>
+<li>단 열심히는 함 · 이틀차라 관망</li>
+</ul></div>
+</div>
+
+<h2>⑦ 인사이트 & 액션</h2>
+<div class="grid cards">
+<div class="card"><h3>인사이트</h3>
+<ul class="li">
+<li class="warn"><span class="k">①</span> 영업부·외주·영지부 <span class="k">직접진행 확대</span>로 리뷰팀 처리건수 감소 + 애초에 <span class="k">캠페인당 충족률도 하락</span>(미모집 발생)</li>
+<li class="ok"><span class="k">②</span> <span class="k">1인당 물량 증가 추세</span> — 수민 현재 200건가량 무난 (기존 리뷰팀 1월엔 1인당 300~400건)</li>
+</ul></div>
+<div class="card"><h3>액션 (주간보고 연계)</h3>
+<div class="actrow"><b>인력</b><div>TO 총 4명 안착 예정 — 신입 1명 추가 채용 상태, 엠마 유지 / 수민·혜빈·신규 중 1~2명 정리하며 <b>한 달 내 헤더 포함 4명</b> 구축</div></div>
+<div class="actrow"><b>온보딩</b><div>온보딩·커리큘럼 재작성 <b>50% 완료</b></div></div>
+</div>
+</div>
+
+<h2>⑧ 노션 운영 체계</h2>
+<div class="grid ch3">
+<div class="card"><h3>관리자 운영 페이지 <span class="pill">GOOD TO GREAT 리뷰[관리자]</span></h3>
+<ul class="li">
+<li>관리자가 <b>[관리자] 페이지·헤더 페이지</b>에서 개개인 직원 <b>워크스페이스·DB 관리</b> 및 <b>업무 오더</b></li>
+</ul><a class="nlink" href="https://www.notion.so/fac709a2f4a082e7a574010113397d88" target="_blank">관리자 페이지</a> <a class="nlink" href="https://www.notion.so/004709a2f4a083ffb5b30112a0b870f8" target="_blank">헤더 워크스페이스</a></div>
+<div class="card"><h3>팀원별 워크스페이스 <span class="pill">예: 조엠마</span></h3>
+<ul class="li">
+<li><b>개인 WS</b>: To-do·회의록·업무목표(KPI)·연습</li>
+<li><b>업무 WS</b>: 상위·세부 업무·근무일지·요청&amp;해결·성과 DB</li>
+<li><b>팀 WS</b>: 공용 페이지 · 오늘/이번주 할 일</li>
+</ul><a class="nlink" href="https://www.notion.so/495709a2f4a08396b40a819903862d71" target="_blank">조엠마 워크스페이스</a></div>
+<div class="card"><h3>온보딩 · 커리큘럼</h3>
+<ul class="li">
+<li><b>온보딩 페이지</b> — 기본 이해 · 표준 프로세스 · 플랫폼 가이드</li>
+<li><b>신입 커리큘럼</b> — 단계별(Phase 0~6) 학습 → 실습 → 체크</li>
+</ul><a class="nlink" href="https://www.notion.so/377709a2f4a0810eba5effcc68fbcf05" target="_blank">온보딩 페이지</a> <a class="nlink" href="https://www.notion.so/37e709a2f4a0811298ede452343e24e4" target="_blank">커리큘럼</a></div>
+</div>
+
+<div class="foot">© GOOD TO GREAT 리뷰팀 · 6월은 1~12일 부분(평일 일평균 기준) · 충족률·완수율은 캠페인 최종상태 기준 · 데이터 + 운영(주간보고·회의록·카톡) 종합</div>
+</div>
+<script>
+const D={"kpi": [["총 처리량(건)", 22729, 4321, "건"], ["평일 일평균(건)", 1196, 432, "건/일"], ["거래처 수", 178, 73, "개"], ["캠페인 수", 472, 163, "개"], ["처리자(월누적)", 6, 3, "명"], ["실행비용", 26140000, 5458750, "원"]], "daily_lab": ["05/04", "05/06", "05/07", "05/08", "05/11", "05/12", "05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/23", "05/24", "05/25", "05/26", "05/27", "05/28", "05/29", "05/30", "05/31", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12"], "daily_done": [3215, 1953, 1548, 1287, 2025, 1552, 1198, 1509, 1194, 1602, 450, 691, 534, 522, 131, 135, 260, 607, 490, 549, 898, 148, 231, 959, 576, 460, 732, 352, 198, 145, 244, 315, 340], "daily_rem": [6154, 5439, 5192, 4594, 5651, 6772, 3884, 5117, 3748, 2561, 1080, 1602, 1352, 1197, 926, 235, 3675, 1287, 1164, 1767, 1898, 630, 1055, 2455, 1691, 1353, 2007, 793, 961, 935, 656, 553, 718], "weeks": ["1주", "2주", "3주", "4주"], "wk5": [8003, 7478, 4065, 3183], "wk6": [3079, 1242, 0, 0], "proc_lab": ["정현이", "차애란", "전혜은", "조윤정", "권수민", "이선주", "조엠마"], "proc5": [10986, 3848, 3533, 3173, 279, 247, 0], "proc6": [1495, 0, 0, 0, 1958, 0, 104], "acct_lab": ["흐름컴퍼니", "성의통상", "와이에스코스", "스카이벤처스", "칙스", "루시아이", "무한원숭이정리", "풀로디드", "바이럴매직", "로운커머스"], "acct_v": [5740, 4883, 1652, 925, 705, 687, 650, 564, 504, 474], "ptype_lab": ["빈박", "실배", "자동구매", "구확", "블로그", "실박", "영수증", "리뷰+한달리뷰"], "ptype_v": [15559, 4254, 4121, 1831, 925, 97, 68, 33], "chan_lab": ["쿠팡", "네이버", "기타", "마켓컬리", "카카오쇼핑", "롯데온", "29cm", "카카오", "w컨셉", "오늘의집"], "chan_v": [14613, 4189, 4010, 687, 552, 520, 160, 157, 82, 80], "dept_lab": ["영업부", "외주", "영지부", "대표"], "dept5": [17139, 2407, 2114, 1053], "dept6": [1527, 1986, 540, 84], "pavg_lab": ["정현이", "전혜은", "차애란", "조윤정", "권수민", "이선주", "조엠마"], "pavg_v": [462, 442, 428, 353, 160, 82, 35], "pavg_days": [27, 8, 9, 9, 14, 3, 3], "mon_lab": ["1월", "2월", "3월", "4월", "5월", "6월*"], "mon_v": [41259, 34622, 35361, 37562, 22729, 4321], "jh_lab": ["1월", "2월", "3월", "4월", "5월", "6월"], "jh_share": [16, 18, 19, 26, 42, 0], "jh_avg": [307, 364, 318, 442, 545, null], "ful_lab": ["05/1주", "05/2주", "05/3주", "05/4주", "06/1주", "06/2주"], "ful_rate": [88, 81, 75, 69, 65, 62], "ful_comp": [87, 69, 58, 54, 37, 38], "leak_lab": ["성의통상", "흐름컴퍼니", "라이프믹스", "모먼트랩스", "루시아이", "바이럴매직", "계림바스", "잠언헬스케어", "픽스업", "와이에스코스"], "leak_v": [4310, 1513, 727, 615, 372, 289, 263, 260, 258, 239], "leak_rate": [66, 82, 81, 39, 70, 68, 47, 40, 56, 90]};
+const NAVY='#1f3864',NAVY2='#3a5a8c',RED='#c0392b',GRY='#c9d2df',AMB='#e0a020',GRN='#1e8449';
+Chart.defaults.font.family="'Pretendard','Malgun Gothic',sans-serif";Chart.defaults.font.size=11;Chart.defaults.color='#6b7686';
+// KPI cards
+const fmt=n=>n.toLocaleString('ko-KR');
+const kw=document.getElementById('kpis');
+D.kpi.forEach(k=>{const[lab,a,b,u]=k;const d=(b-a)/a*100;const dn=d<0;
+ kw.insertAdjacentHTML('beforeend',`<div class="kpi"><div class="lab">${lab}</div><div class="now">${u==='원'?fmt(Math.round(b/10000))+'<small>만</small>':fmt(b)}<small>${u==='원'?'원':u.replace('건','')||''}</small></div><div class="cmp">5월 ${u==='원'?fmt(Math.round(a/10000))+'만':fmt(a)} <span class="d ${dn?'dn':'up'}">${dn?'▼':'▲'}${Math.abs(d).toFixed(0)}%</span></div></div>`);});
+const grid={plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'#eef1f5'},beginAtZero:true}},maintainAspectRatio:false};
+const leg=JSON.parse(JSON.stringify(grid));leg.plugins.legend={display:true,position:'top',labels:{boxWidth:10}};
+new Chart(cFul,{type:'line',data:{labels:D.ful_lab,datasets:[{label:'건수 충족률',data:D.ful_rate,borderColor:NAVY,backgroundColor:'rgba(31,56,100,.06)',fill:true,tension:.3,pointRadius:3,borderWidth:2},{label:'완수 캠페인율(정량 100%)',data:D.ful_comp,borderColor:RED,backgroundColor:'transparent',tension:.3,pointRadius:3,borderWidth:2,borderDash:[5,4]}]},options:{plugins:{legend:{display:true,position:'top',labels:{boxWidth:10}}},maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{beginAtZero:true,max:100,grid:{color:'#eef1f5'},ticks:{callback:v=>v+'%'}}}}});
+new Chart(cWeek,{type:'bar',data:{labels:D.weeks,datasets:[{label:'5월',data:D.wk5,backgroundColor:NAVY},{label:'6월',data:D.wk6,backgroundColor:AMB}]},options:leg});
+new Chart(cLeak,{type:'bar',data:{labels:D.leak_lab,datasets:[{data:D.leak_v,backgroundColor:RED}]},options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>'충족률 '+D.leak_rate[c.dataIndex]+'%'}}},maintainAspectRatio:false,scales:{x:{beginAtZero:true,grid:{color:'#eef1f5'},title:{display:true,text:'미모집 건수'}},y:{grid:{display:false}}}}});
+new Chart(cProc,{type:'bar',data:{labels:D.proc_lab,datasets:[{label:'5월',data:D.proc5,backgroundColor:GRY},{label:'6월',data:D.proc6,backgroundColor:NAVY}]},options:leg});
+new Chart(cMon,{type:'bar',data:{labels:D.mon_lab,datasets:[{data:D.mon_v,backgroundColor:D.mon_lab.map(l=>l.includes('*')?AMB:NAVY)}]},options:grid});
+new Chart(cShare,{type:'line',data:{labels:D.jh_lab,datasets:[{data:D.jh_share,borderColor:RED,backgroundColor:'rgba(192,57,43,.08)',fill:true,tension:.3,pointRadius:4,borderWidth:2}]},options:{plugins:{legend:{display:false}},maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{beginAtZero:true,max:100,grid:{color:'#eef1f5'},ticks:{callback:v=>v+'%'}}}}});
+const cur=new Set(['권수민','조엠마','최휘연']);
+new Chart(cPavg,{type:'bar',data:{labels:D.pavg_lab,datasets:[{data:D.pavg_v,backgroundColor:D.pavg_lab.map(n=>cur.has(n)?NAVY:GRY)}]},options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:(c)=>'근무 '+D.pavg_days[c.dataIndex]+'일'}}},maintainAspectRatio:false,scales:{x:{beginAtZero:true,grid:{color:'#eef1f5'},title:{display:true,text:'완료/일'}},y:{grid:{display:false}}}}});
+new Chart(cAcct,{type:'bar',data:{labels:D.acct_lab,datasets:[{data:D.acct_v,backgroundColor:NAVY}]},options:{indexAxis:'y',plugins:{legend:{display:false}},maintainAspectRatio:false,scales:{x:{beginAtZero:true,grid:{color:'#eef1f5'}},y:{grid:{display:false}}}}});
+new Chart(cType,{type:'doughnut',data:{labels:D.ptype_lab,datasets:[{data:D.ptype_v,backgroundColor:[NAVY,AMB,'#5b7aa8','#9bb0cc','#d4a017','#7d8aa0','#bcc7d8','#e3ad3a']}]},options:{plugins:{legend:{position:'right',labels:{boxWidth:10}}},maintainAspectRatio:false}});
+new Chart(cChan,{type:'bar',data:{labels:D.chan_lab,datasets:[{data:D.chan_v,backgroundColor:NAVY2}]},options:{indexAxis:'y',plugins:{legend:{display:false}},maintainAspectRatio:false,scales:{x:{beginAtZero:true,grid:{color:'#eef1f5'}},y:{grid:{display:false}}}}});
+new Chart(cDept,{type:'bar',data:{labels:D.dept_lab,datasets:[{label:'5월',data:D.dept5,backgroundColor:GRY},{label:'6월',data:D.dept6,backgroundColor:NAVY}]},options:leg});
+</script></body></html>
